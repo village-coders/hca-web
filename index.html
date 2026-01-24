@@ -62,9 +62,9 @@
         
         .containerr {
             width: 100%;
-            /* max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 20px; */
+            /* max-width: 1200px; */
+            /* margin: 0 auto; */
+            padding: 0 20px;
         }
 
         .btn {
@@ -207,7 +207,7 @@
         /* Hero Section with Only Slider and News */
         .hero-container {
             padding-top: 150px;
-            padding-bottom: 50px;
+            padding-bottom: 30px;
             background: linear-gradient(rgba(10, 92, 54, 0.85), rgba(10, 92, 54, 0.9)), url('https://images.unsplash.com/photo-1610360655260-bb6dcc4ac75c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
             /* background-size: cover;
             background-position: center; */
@@ -220,8 +220,8 @@
         .hero-content {
             display: flex;
             flex-wrap: wrap;
-            gap: 40px;
-            width: 110%;
+            gap: 20px;
+            width: 100%;
         }
 
         .hero-slider-section {
@@ -1100,8 +1100,63 @@
 
     <!-- Hero Section with Only Slider and News -->
     <section class="hero-container" id="home">
-        <div class="container">
+        <div class="containerr">
             <div class="hero-content">
+                <!-- News Section -->
+                <div class="hero-news-section">
+                    <div class="hero-news-container">
+                        <div class="hero-news-header">
+                            <h2>Latest News & Updates</h2>
+                        </div>
+
+                        <div class="hero-news-list">
+                            <div class="hero-news-item">
+                                <div class="hero-news-date">
+                                    <i class="far fa-calendar-alt"></i> June 15, 2023
+                                </div>
+                                <h3 class="hero-news-title">New Halal Standards for Food Processing</h3>
+                                <p class="news-excerpt">HCA Nigeria releases updated guidelines for food processing facilities seeking Halal certification to align with international standards.</p>
+                            </div>
+
+                            <div class="hero-news-item">
+                                <div class="hero-news-date">
+                                    <i class="far fa-calendar-alt"></i> May 28, 2023
+                                </div>
+                                <h3 class="hero-news-title">Partnership with Saudi Food Authority</h3>
+                                <p class="news-excerpt">HCA Nigeria signs MoU with Saudi Food and Drug Authority to streamline Halal certification for Nigerian exporters.</p>
+                            </div>
+
+                            <div class="hero-news-item">
+                                <div class="hero-news-date">
+                                    <i class="far fa-calendar-alt"></i> April 10, 2023
+                                </div>
+                                <h3 class="hero-news-title">Halal Awareness Workshop in Lagos</h3>
+                                <p class="news-excerpt">Successful completion of our Halal certification workshop for restaurants and food service providers in Lagos state.</p>
+                            </div>
+
+                            <div class="hero-news-item">
+                                <div class="hero-news-date">
+                                    <i class="far fa-calendar-alt"></i> March 22, 2023
+                                </div>
+                                <h3 class="hero-news-title">New Certification Portal Launch</h3>
+                                <p class="news-excerpt">We've launched a new online portal for easier application and tracking of Halal certification requests.</p>
+                            </div>
+
+                            <div class="hero-news-item">
+                                <div class="hero-news-date">
+                                    <i class="far fa-calendar-alt"></i> February 14, 2023
+                                </div>
+                                <h3 class="hero-news-title">International Recognition Achieved</h3>
+                                <p class="news-excerpt">HCA Nigeria receives accreditation from the World Halal Food Council, expanding our international recognition.</p>
+                            </div>
+                        </div>
+
+                        <div class="view-all-news">
+                            <a href="#" class="btn btn-accent">View All News</a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Slider Section -->
                 <div class="hero-slider-section">
                     <div class="hero-slider">
@@ -1112,7 +1167,7 @@
                                 <p>Comprehensive Halal certification for all types of food and beverage products.</p>
                             </div>
                         </div>
-                        
+
                         <!-- Slide 2 -->
                         <div class="hero-slide" style="background-image: url('');">
                             <div class="slide-content">
@@ -1120,7 +1175,7 @@
                                 <p>Ensuring Halal compliance in food preparation and handling establishments.</p>
                             </div>
                         </div>
-                        
+
                         <!-- Slide 3 -->
                         <div class="hero-slide" style="background-image: url('');">
                             <div class="slide-content">
@@ -1128,7 +1183,7 @@
                                 <p>Halal certification for personal care products and medicines.</p>
                             </div>
                         </div>
-                        
+
                         <!-- Slide 4 -->
                         <div class="hero-slide" style="background-image: url('');">
                             <div class="slide-content">
@@ -1136,7 +1191,7 @@
                                 <p>Internationally recognized certification for Nigerian exporters.</p>
                             </div>
                         </div>
-                        
+
                         <!-- Slide 5 -->
                         <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80');">
                             <div class="slide-content">
@@ -1144,7 +1199,7 @@
                                 <p>Nigeria's leading authority for authentic Halal certification services.</p>
                             </div>
                         </div>
-                        
+
                         <div class="slider-arrows">
                             <div class="arrow" id="prevSlide">
                                 <i class="fas fa-chevron-left"></i>
@@ -1153,68 +1208,13 @@
                                 <i class="fas fa-chevron-right"></i>
                             </div>
                         </div>
-                        
+
                         <div class="slider-nav" id="sliderNav">
                             <div class="slider-btn active" data-slide="0"></div>
                             <div class="slider-btn" data-slide="1"></div>
                             <div class="slider-btn" data-slide="2"></div>
                             <div class="slider-btn" data-slide="3"></div>
                             <div class="slider-btn" data-slide="4"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- News Section -->
-                <div class="hero-news-section">
-                    <div class="hero-news-container">
-                        <div class="hero-news-header">
-                            <h2>Latest News & Updates</h2>
-                        </div>
-                        
-                        <div class="hero-news-list">
-                            <div class="hero-news-item">
-                                <div class="hero-news-date">
-                                    <i class="far fa-calendar-alt"></i> June 15, 2023
-                                </div>
-                                <h3 class="hero-news-title">New Halal Standards for Food Processing</h3>
-                                <p class="news-excerpt">HCA Nigeria releases updated guidelines for food processing facilities seeking Halal certification to align with international standards.</p>
-                            </div>
-                            
-                            <div class="hero-news-item">
-                                <div class="hero-news-date">
-                                    <i class="far fa-calendar-alt"></i> May 28, 2023
-                                </div>
-                                <h3 class="hero-news-title">Partnership with Saudi Food Authority</h3>
-                                <p class="news-excerpt">HCA Nigeria signs MoU with Saudi Food and Drug Authority to streamline Halal certification for Nigerian exporters.</p>
-                            </div>
-                            
-                            <div class="hero-news-item">
-                                <div class="hero-news-date">
-                                    <i class="far fa-calendar-alt"></i> April 10, 2023
-                                </div>
-                                <h3 class="hero-news-title">Halal Awareness Workshop in Lagos</h3>
-                                <p class="news-excerpt">Successful completion of our Halal certification workshop for restaurants and food service providers in Lagos state.</p>
-                            </div>
-                            
-                            <div class="hero-news-item">
-                                <div class="hero-news-date">
-                                    <i class="far fa-calendar-alt"></i> March 22, 2023
-                                </div>
-                                <h3 class="hero-news-title">New Certification Portal Launch</h3>
-                                <p class="news-excerpt">We've launched a new online portal for easier application and tracking of Halal certification requests.</p>
-                            </div>
-                            
-                            <div class="hero-news-item">
-                                <div class="hero-news-date">
-                                    <i class="far fa-calendar-alt"></i> February 14, 2023
-                                </div>
-                                <h3 class="hero-news-title">International Recognition Achieved</h3>
-                                <p class="news-excerpt">HCA Nigeria receives accreditation from the World Halal Food Council, expanding our international recognition.</p>
-                            </div>
-                        </div>
-                        
-                        <div class="view-all-news">
-                            <a href="#" class="btn btn-accent">View All News</a>
                         </div>
                     </div>
                 </div>
