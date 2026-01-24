@@ -6,6 +6,7 @@
     <title>Halal Certification Authority Nigeria - Official Website</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap">
+    <link rel="shortcut icon" href="/image/image1-1.png" type="image/x-icon">
     <style>
         * {
             margin: 0;
@@ -147,7 +148,7 @@
         }
 
         .logo-img {
-            height: 60px;
+            height: 80px;
             margin-right: 15px;
         }
 
@@ -204,7 +205,7 @@
 
         /* Hero Section with Only Slider and News */
         .hero-container {
-            padding-top: 100px;
+            padding-top: 120px;
             padding-bottom: 30px;
             background: linear-gradient(rgba(10, 92, 54, 0.85), rgba(10, 92, 54, 0.9)), url('https://images.unsplash.com/photo-1610360655260-bb6dcc4ac75c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
             background-attachment: fixed;
@@ -258,7 +259,7 @@
         }
 
         .slide-content {
-            background: rgba(10, 92, 54, 0.85);
+            background:rgb(10 92 54 / 47%);
             color: white;
             padding: 25px;
             border-radius: 8px;
@@ -745,342 +746,704 @@
         }
 
         /* Management Team Section - CAROUSEL STYLE */
-        .management-team {
-            background-color: #f9f9f9;
-            position: relative;
-            overflow: hidden;
-        }
+        /* Management Team Section - CAROUSEL STYLE - RESPONSIVE ENHANCEMENTS */
+.management-team {
+    background-color: #f9f9f9;
+    position: relative;
+    overflow: hidden;
+    padding: 60px 0;
+}
 
-        .team-intro {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 50px;
-            color: var(--gray-color);
-            font-size: 1.1rem;
-            line-height: 1.7;
-        }
+.team-intro {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 50px;
+    color: var(--gray-color);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    padding: 0 20px;
+}
 
-        /* Team Carousel Container */
-        .team-carousel-wrapper {
-            position: relative;
-            /* max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 60px; */
-        }
+/* Team Carousel Container */
+.team-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
 
-        .team-carousel {
-            overflow: hidden;
-            border-radius: 16px;
-            background: linear-gradient(145deg, #ffffff, #f5f5f5);
-            position: relative;
-        }
+.team-carousel {
+    overflow: hidden;
+    border-radius: 16px;
+    background: linear-gradient(145deg, #ffffff, #f5f5f5);
+    position: relative;
+    padding: 20px 0;
+}
 
-        .team-carousel-track {
-            display: flex;
-            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            will-change: transform;
-            padding: 0 10px;
-        }
+.team-carousel-track {
+    display: flex;
+    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+    padding: 0 10px;
+}
 
-        .team-carousel-slide {
-            min-width: 100%;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            padding: 20px;
-            box-sizing: border-box;
-        }
+.team-carousel-slide {
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    gap: 25px;
+    padding: 15px;
+    box-sizing: border-box;
+    flex-wrap: nowrap;
+}
 
-        /* Team Member Cards */
-        .team-member {
-            background-color: white;
-            border-radius: 16px;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            flex: 0 0 270px;
-            max-width: 270px;
-            border: 1px solid rgba(10, 92, 54, 0.1);
-            position: relative;
-            opacity: 0.7;
-            transform: scale(0.9);
-            filter: brightness(0.95);
-            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
+/* Team Member Cards */
+.team-member {
+    background-color: white;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    flex: 0 0 auto;
+    width: calc(25% - 20px); /* 4 cards per slide on desktop */
+    max-width: 300px;
+    min-width: 250px;
+    border: 1px solid rgba(10, 92, 54, 0.1);
+    position: relative;
+    opacity: 0.7;
+    transform: scale(0.9);
+    filter: brightness(0.95);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+}
 
-        .team-member.active {
-            opacity: 1;
-            transform: scale(1);
-            filter: brightness(1);
-            box-shadow: 0 20px 40px rgba(10, 92, 54, 0.15);
-            border-color: var(--accent-color);
-            z-index: 2;
-        }
+.team-member.active {
+    opacity: 1;
+    transform: scale(1);
+    filter: brightness(1);
+    box-shadow: 0 20px 40px rgba(10, 92, 54, 0.15);
+    border-color: var(--accent-color);
+    z-index: 2;
+}
 
-        .team-member.prev, .team-member.next {
-            opacity: 0.85;
-            transform: scale(0.95);
-            filter: brightness(0.98);
-        }
+.team-member.prev, .team-member.next {
+    opacity: 0.85;
+    transform: scale(0.95);
+    filter: brightness(0.98);
+}
 
-        .team-member:hover {
-            transform: scale(1.05) translateY(-10px);
-            box-shadow: 0 25px 50px rgba(10, 92, 54, 0.2);
-            border-color: var(--primary-color);
-            z-index: 3;
-        }
+.team-member:hover {
+    transform: scale(1.05) translateY(-10px);
+    box-shadow: 0 25px 50px rgba(10, 92, 54, 0.2);
+    border-color: var(--primary-color);
+    z-index: 3;
+}
 
-        .member-img {
-            height: 240px;
-            overflow: hidden;
-            position: relative;
-            background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
-        }
+.member-img {
+    height: 240px;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+    flex-shrink: 0;
+}
 
-        .member-img:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, transparent 60%, rgba(10, 92, 54, 0.15) 100%);
-            z-index: 1;
-        }
+.member-img:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent 60%, rgba(10, 92, 54, 0.15) 100%);
+    z-index: 1;
+}
 
-        .member-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
+.member-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
 
-        .team-member:hover .member-img img {
-            transform: scale(1.1);
-        }
+.team-member:hover .member-img img {
+    transform: scale(1.1);
+}
 
-        .member-info {
-            padding: 25px 20px;
-            text-align: center;
-            position: relative;
-            background: linear-gradient(to bottom, white, #f8f9fa);
-        }
+.member-info {
+    padding: 25px 20px;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(to bottom, white, #f8f9fa);
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 
-        .member-name {
-            color: var(--primary-color);
-            margin-bottom: 8px;
-            font-size: 1.25rem;
-            font-weight: 700;
-            transition: var(--transition);
-        }
+.member-name {
+    color: var(--primary-color);
+    margin-bottom: 8px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    transition: var(--transition);
+    line-height: 1.3;
+}
 
-        .member-title {
-            color: var(--accent-color);
-            font-weight: 600;
-            margin-bottom: 10px;
-            font-size: 0.95rem;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-        }
+.member-title {
+    color: var(--accent-color);
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    line-height: 1.3;
+}
 
-        .member-qualification {
-            color: var(--gray-color);
-            font-size: 0.85rem;
-            margin-bottom: 8px;
-            font-style: italic;
-        }
+.member-qualification {
+    color: var(--gray-color);
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+    font-style: italic;
+    line-height: 1.3;
+}
 
-        .member-experience {
-            color: var(--dark-color);
-            font-size: 0.9rem;
-            line-height: 1.4;
-            opacity: 0.9;
-        }
+.member-experience {
+    color: var(--dark-color);
+    font-size: 0.9rem;
+    line-height: 1.4;
+    opacity: 0.9;
+    margin-top: auto;
+}
 
-        /* Carousel Navigation */
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: white;
-            color: var(--primary-color);
-            border: none;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: 20;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.4rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            border: 2px solid rgba(10, 92, 54, 0.1);
-        }
+/* Carousel Navigation */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    color: var(--primary-color);
+    border: none;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border: 2px solid rgba(10, 92, 54, 0.1);
+}
 
-        .carousel-btn:hover {
-            background-color: var(--primary-color);
-            color: white;
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 15px 35px rgba(10, 92, 54, 0.25);
-            border-color: var(--primary-color);
-        }
+.carousel-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 15px 35px rgba(10, 92, 54, 0.25);
+    border-color: var(--primary-color);
+}
 
-        .carousel-btn:active {
-            transform: translateY(-50%) scale(0.95);
-        }
+.carousel-btn:active {
+    transform: translateY(-50%) scale(0.95);
+}
 
-        .carousel-btn.prev {
-            left: 10px;
-        }
+.carousel-btn.prev {
+    left: 10px;
+}
 
-        .carousel-btn.next {
-            right: 10px;
-        }
+.carousel-btn.next {
+    right: 10px;
+}
 
-        /* Carousel Dots */
-        .carousel-dots {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            margin-top: 40px;
-            align-items: center;
-        }
+/* Carousel Dots */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 40px;
+    align-items: center;
+    flex-wrap: wrap;
+}
 
-        .carousel-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background-color: #ddd;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            position: relative;
-        }
+.carousel-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: #ddd;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    flex-shrink: 0;
+}
 
-        .carousel-dot.active {
-            background-color: var(--primary-color);
-            transform: scale(1.3);
-            box-shadow: 0 0 0 4px rgba(10, 92, 54, 0.2);
-        }
+.carousel-dot.active {
+    background-color: var(--primary-color);
+    transform: scale(1.3);
+    box-shadow: 0 0 0 4px rgba(10, 92, 54, 0.2);
+}
 
-        .carousel-dot:hover {
-            transform: scale(1.2);
-            background-color: var(--secondary-color);
-        }
+.carousel-dot:hover {
+    transform: scale(1.2);
+    background-color: var(--secondary-color);
+}
 
-        /* Slide Counter */
-        .slide-counter {
-            text-align: center;
-            margin-top: 25px;
-            color: var(--gray-color);
-            font-weight: 600;
-            font-size: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
+/* Slide Counter */
+.slide-counter {
+    text-align: center;
+    margin-top: 25px;
+    color: var(--gray-color);
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
 
-        .slide-counter span {
-            color: var(--primary-color);
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
+.slide-counter span {
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.2rem;
+}
 
-        .counter-separator {
-            color: var(--accent-color);
-            font-weight: 500;
-        }
+.counter-separator {
+    color: var(--accent-color);
+    font-weight: 500;
+}
 
-        /* Responsive Design for Carousel */
-        @media (max-width: 1200px) {
-            .team-carousel-wrapper {
-                padding: 0 50px;
-            }
-            
-            .team-member {
-                flex: 0 0 240px;
-                max-width: 240px;
-            }
-        }
+/* ========== RESPONSIVE DESIGN ========== */
 
-        @media (max-width: 992px) {
-            .team-carousel-wrapper {
-                padding: 0 40px;
-            }
-            
-            .team-member {
-                flex: 0 0 220px;
-                max-width: 220px;
-            }
-            
-            .carousel-btn {
-                width: 55px;
-                height: 55px;
-                font-size: 1.3rem;
-            }
-        }
+/* Large Desktop */
+@media (min-width: 1400px) {
+    .team-carousel-wrapper {
+        max-width: 1400px;
+        padding: 0 40px;
+    }
+    
+    .team-carousel-slide {
+        gap: 30px;
+        padding: 20px;
+    }
+    
+    .team-member {
+        width: calc(25% - 22.5px); /* 4 cards with better spacing */
+    }
+}
 
-        @media (max-width: 768px) {
-            .team-carousel-wrapper {
-                padding: 0 30px;
-            }
-            
-            .team-carousel-slide {
-                gap: 20px;
-                padding: 15px;
-            }
-            
-            .team-member {
-                flex: 0 0 200px;
-                max-width: 200px;
-            }
-            
-            .carousel-btn {
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
-            }
-            
-            .carousel-btn.prev {
-                left: 5px;
-            }
-            
-            .carousel-btn.next {
-                right: 5px;
-            }
-            
-            .carousel-dots {
-                margin-top: 30px;
-            }
-        }
+/* Desktop */
+@media (max-width: 1399px) and (min-width: 992px) {
+    .team-carousel-wrapper {
+        padding: 0 30px;
+    }
+    
+    .team-carousel-slide {
+        gap: 20px;
+        padding: 15px;
+    }
+    
+    .team-member {
+        width: calc(25% - 15px);
+        min-width: 220px;
+    }
+    
+    .member-img {
+        height: 200px;
+    }
+    
+    .member-name {
+        font-size: 1.1rem;
+    }
+}
 
-        @media (max-width: 576px) {
-            .team-carousel-wrapper {
-                padding: 0 15px;
-            }
-            
-            .team-carousel-slide {
-                gap: 15px;
-                padding: 10px;
-            }
-            
-            .team-member {
-                flex: 0 0 180px;
-                max-width: 180px;
-            }
-            
-            .carousel-btn {
-                display: none;
-            }
-            
-            .carousel-dots {
-                gap: 8px;
-                margin-top: 25px;
-            }
-        }
+/* Tablet Landscape */
+@media (max-width: 991px) and (min-width: 768px) {
+    .management-team {
+        padding: 50px 0;
+    }
+    
+    .team-intro {
+        font-size: 1rem;
+        margin-bottom: 40px;
+    }
+    
+    .team-carousel-wrapper {
+        padding: 0 20px;
+    }
+    
+    .team-carousel-slide {
+        gap: 15px;
+        padding: 10px;
+        justify-content: flex-start;
+    }
+    
+    .team-member {
+        width: calc(33.333% - 10px); /* 3 cards per slide */
+        min-width: 200px;
+        max-width: 250px;
+    }
+    
+    .member-img {
+        height: 180px;
+    }
+    
+    .member-info {
+        padding: 20px 15px;
+    }
+    
+    .member-name {
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+    
+    .member-title {
+        font-size: 0.85rem;
+        margin-bottom: 8px;
+    }
+    
+    .member-qualification {
+        font-size: 0.8rem;
+    }
+    
+    .member-experience {
+        font-size: 0.85rem;
+    }
+    
+    .carousel-btn {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    .carousel-btn.prev {
+        left: 5px;
+    }
+    
+    .carousel-btn.next {
+        right: 5px;
+    }
+    
+    .carousel-dots {
+        margin-top: 30px;
+    }
+}
 
+/* Tablet Portrait */
+@media (max-width: 767px) and (min-width: 576px) {
+    .management-team {
+        padding: 40px 0;
+    }
+    
+    .team-intro {
+        font-size: 0.95rem;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+    
+    .team-carousel-wrapper {
+        padding: 0 15px;
+    }
+    
+    .team-carousel {
+        padding: 15px 0;
+    }
+    
+    .team-carousel-slide {
+        gap: 12px;
+        padding: 8px;
+    }
+    
+    .team-member {
+        width: calc(50% - 6px); /* 2 cards per slide */
+        min-width: 180px;
+        max-width: 220px;
+        border-radius: 12px;
+    }
+    
+    .member-img {
+        height: 160px;
+    }
+    
+    .member-info {
+        padding: 15px 12px;
+    }
+    
+    .member-name {
+        font-size: 0.95rem;
+        margin-bottom: 4px;
+    }
+    
+    .member-title {
+        font-size: 0.8rem;
+        margin-bottom: 6px;
+        letter-spacing: 0.5px;
+    }
+    
+    .member-qualification {
+        font-size: 0.75rem;
+        margin-bottom: 5px;
+    }
+    
+    .member-experience {
+        font-size: 0.8rem;
+        line-height: 1.3;
+    }
+    
+    .carousel-btn {
+        width: 45px;
+        height: 45px;
+        font-size: 1.1rem;
+        display: none; /* Hide buttons on smaller screens */
+    }
+    
+    .carousel-dots {
+        gap: 8px;
+        margin-top: 25px;
+    }
+    
+    .carousel-dot {
+        width: 12px;
+        height: 12px;
+    }
+    
+    .slide-counter {
+        font-size: 0.9rem;
+        margin-top: 20px;
+    }
+    
+    .slide-counter span {
+        font-size: 1rem;
+    }
+}
+
+/* Mobile Devices */
+@media (max-width: 575px) {
+    .management-team {
+        padding: 30px 0;
+    }
+    
+    .team-intro {
+        font-size: 0.9rem;
+        margin-bottom: 25px;
+        line-height: 1.5;
+        padding: 0 15px;
+    }
+    
+    .team-carousel-wrapper {
+        padding: 0 10px;
+    }
+    
+    .team-carousel {
+        padding: 10px 0;
+        border-radius: 12px;
+    }
+    
+    .team-carousel-slide {
+        gap: 8px;
+        padding: 5px;
+    }
+    
+    .team-member {
+        width: calc(100% - 10px); /* 1 card per slide on mobile */
+        min-width: 160px;
+        max-width: 200px;
+        margin: 0 auto;
+        border-radius: 10px;
+        opacity: 0.85;
+        transform: scale(0.95);
+    }
+    
+    .team-member.active {
+        opacity: 1;
+        transform: scale(1);
+        min-width: 180px;
+        max-width: 220px;
+    }
+    
+    .member-img {
+        height: 150px;
+    }
+    
+    .member-info {
+        padding: 12px 10px;
+    }
+    
+    .member-name {
+        font-size: 0.9rem;
+        margin-bottom: 3px;
+    }
+    
+    .member-title {
+        font-size: 0.75rem;
+        margin-bottom: 5px;
+        letter-spacing: 0.3px;
+    }
+    
+    .member-qualification {
+        font-size: 0.7rem;
+        margin-bottom: 4px;
+    }
+    
+    .member-experience {
+        font-size: 0.75rem;
+        line-height: 1.2;
+    }
+    
+    .carousel-btn {
+        display: none; /* Hide buttons on mobile */
+    }
+    
+    .carousel-dots {
+        gap: 6px;
+        margin-top: 20px;
+    }
+    
+    .carousel-dot {
+        width: 10px;
+        height: 10px;
+    }
+    
+    .slide-counter {
+        font-size: 0.85rem;
+        margin-top: 15px;
+        gap: 5px;
+    }
+    
+    .slide-counter span {
+        font-size: 0.95rem;
+    }
+}
+
+/* Very Small Mobile Devices */
+@media (max-width: 360px) {
+    .management-team {
+        padding: 25px 0;
+    }
+    
+    .team-intro {
+        font-size: 0.85rem;
+        margin-bottom: 20px;
+    }
+    
+    .team-member {
+        min-width: 140px;
+        max-width: 180px;
+    }
+    
+    .team-member.active {
+        min-width: 160px;
+        max-width: 200px;
+    }
+    
+    .member-img {
+        height: 140px;
+    }
+    
+    .member-info {
+        padding: 10px 8px;
+    }
+    
+    .member-name {
+        font-size: 0.85rem;
+    }
+    
+    .member-title {
+        font-size: 0.7rem;
+    }
+    
+    .member-qualification {
+        font-size: 0.65rem;
+    }
+    
+    .member-experience {
+        font-size: 0.7rem;
+    }
+    
+    .carousel-dots {
+        gap: 4px;
+        margin-top: 15px;
+    }
+    
+    .carousel-dot {
+        width: 8px;
+        height: 8px;
+    }
+}
+
+/* Touch Device Optimizations */
+@media (hover: none) and (pointer: coarse) {
+    .team-member:hover {
+        transform: scale(1) translateY(0);
+    }
+    
+    .team-member.active:hover {
+        transform: scale(1.02) translateY(-5px);
+    }
+    
+    .carousel-btn {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .carousel-dot {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* High DPI Screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .team-member {
+        border-width: 0.5px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .management-team {
+        background-color: white !important;
+        padding: 20px 0 !important;
+    }
+    
+    .team-carousel {
+        box-shadow: none !important;
+        background: white !important;
+    }
+    
+    .team-carousel-track {
+        transform: none !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+    }
+    
+    .team-carousel-slide {
+        min-width: auto !important;
+        flex-wrap: wrap !important;
+        gap: 20px !important;
+    }
+    
+    .team-member {
+        width: calc(50% - 20px) !important;
+        max-width: 250px !important;
+        margin-bottom: 20px !important;
+        break-inside: avoid;
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+    }
+    
+    .carousel-btn,
+    .carousel-dots,
+    .slide-counter {
+        display: none !important;
+    }
+}
         /* FAQs Section */
         .faqs {
             background-color: #f9f9f9;
@@ -1377,7 +1740,8 @@
                     <li><a href="#home" class="active">Home</a></li>
                     <li><a href="aboutus.html">About</a></li>
                     <li><a href="Services.html">Services</a></li>
-                    <li><a href="https://halal-certification-authority.vercel.app/">Online Certification Portal</a></li>
+                    <li><a target="_blank" href="https://halal-certification-authority.vercel.app/">Online Certification Portal</a></li>
+                    <li><a target="_blank" href="https://halal-certification-authority.vercel.app/">Login/Register</a></li>
                     <li><a href="news.html">News</a></li>
                     <li><a href="conatct.html">Contact</a></li>
                 </ul>
@@ -2036,7 +2400,8 @@
             </div>
             
             <div class="copyright">
-                <p>&copy; 2023 Halal Certification Authority Nigeria. All rights reserved. | <a href="#" style="color: #d4af37;">Privacy Policy</a> | <a href="#" style="color: #d4af37;">Terms of Use</a></p>
+                <p>&copy; <span id="autoYear"></span> Halal Certification Authority Nigeria. All rights reserved. | <a href="#" style="color: #d4af37;">Privacy Policy</a> | <a href="#" style="color: #d4af37;">Terms of Use</a></p> <br>
+                <p>Developed by <a href="https://theyoungpioneers.com/" style="color: #d4af37;">The Young Pioneers</a></p>
             </div>
         </div>
     </footer>
@@ -2486,6 +2851,11 @@
                 console.error('Error loading news:', error);
             }
         }
+
+        const autoYearSpan = document.getElementById('autoYear');
+        const currentYear = new Date().getFullYear();
+        autoYearSpan.textContent = currentYear;
+
 
         // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
