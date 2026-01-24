@@ -88,7 +88,7 @@
         }
 
         .section {
-            padding: 80px 0;
+            padding: 30px 0;
         }
 
         .section-title {
@@ -200,7 +200,7 @@
 
         /* Page Hero */
         .page-hero {
-            background: linear-gradient(rgba(10, 92, 54, 0.85), rgba(10, 92, 54, 0.9)), url('https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
+            background: linear-gradient(rgba(10, 92, 54, 0.85), rgba(10, 92, 54, 0.9)), url('/image/Gemini_Generated_Image_o8rdvno8rdvno8rd.png');
             background-size: cover;
             background-position: center;
             color: white;
@@ -245,7 +245,7 @@
 
         /* News Page Content */
         .news-page {
-            padding: 80px 0;
+            padding: 30px 0;
             background-color: #f9f9f9;
         }
 
@@ -390,46 +390,7 @@
             transform: rotate(180deg);
         }
 
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 50px;
-        }
-
-        .page-numbers {
-            display: flex;
-            list-style: none;
-        }
-
-        .page-numbers li {
-            margin: 0 5px;
-        }
-
-        .page-numbers a, .page-numbers span {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 4px;
-            background-color: white;
-            color: var(--dark-color);
-            font-weight: 500;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
-        }
-
-        .page-numbers a:hover {
-            background-color: var(--primary-color);
-            color: white;
-            transform: translateY(-3px);
-        }
-
-        .page-numbers .current {
-            background-color: var(--primary-color);
-            color: white;
-        }
+        
 
         /* Footer */
         footer {
@@ -599,7 +560,7 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="aboutus.html">About</a></li>
                     <li><a href="Services.html">Services</a></li>
-                    <li><a href="Services.html#process">Certification Process</a></li>
+                    <li><a href="Services.html#process">Online Certification Portal</a></li>
                     <li><a href="news.html" class="active">News</a></li>
                     <li><a href="conatct.html">Contact</a></li>
                 </ul>
@@ -842,17 +803,7 @@
                     </div>
                 </article>
             </div>
-
-            <!-- Pagination -->
-            <div class="pagination">
-                <ul class="page-numbers">
-                    <li><a href="#"><i class="fas fa-chevron-left"></i></a></li>
-                    <li><span class="current">1</span></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i></a></li>
-                </ul>
-            </div>
+            
         </div>
     </section>
 
@@ -903,17 +854,41 @@
         </div>
     </footer>
 
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyC-rfIMVhvTtOoCfy54TRKd_uBtV6Rm_BU",
+        authDomain: "halal-cert-ba673.firebaseapp.com",
+        projectId: "halal-cert-ba673",
+        storageBucket: "halal-cert-ba673.firebasestorage.app",
+        messagingSenderId: "134058623053",
+        appId: "1:134058623053:web:383d36bc4f37081ab45c04",
+        measurementId: "G-QF58M6YP7R"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
+
     <script>
         // Mobile Navigation Toggle
         const mobileToggle = document.getElementById('mobileToggle');
         const navMenu = document.getElementById('navMenu');
-        
+
         mobileToggle.addEventListener('click', () => {
             navMenu.classList.toggle('active');
             mobileToggle.querySelector('i').classList.toggle('fa-bars');
             mobileToggle.querySelector('i').classList.toggle('fa-times');
         });
-        
+
         // Close mobile menu when clicking on a link
         document.querySelectorAll('.nav-menu a').forEach(link => {
             link.addEventListener('click', () => {
@@ -922,13 +897,13 @@
                 mobileToggle.querySelector('i').classList.remove('fa-times');
             });
         });
-        
+
         // Animate news articles on scroll
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
         };
-        
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting) {
@@ -936,18 +911,18 @@
                 }
             });
         }, observerOptions);
-        
+
         // Observe all news articles
         document.querySelectorAll('.news-article').forEach(article => {
             observer.observe(article);
         });
-        
+
         // "Read More" functionality
         document.querySelectorAll('.read-more').forEach(button => {
             button.addEventListener('click', function() {
                 const articleId = this.getAttribute('data-article');
                 const fullArticle = document.getElementById(`${articleId}-full`);
-                
+
                 // Toggle the display of the full article
                 if (fullArticle.style.display === 'block') {
                     fullArticle.style.display = 'none';
@@ -960,43 +935,158 @@
                 }
             });
         });
-        
-        // Pagination animation
-        document.querySelectorAll('.page-numbers a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Remove current class from all pagination items
-                document.querySelectorAll('.page-numbers li span').forEach(item => {
-                    item.classList.remove('current');
-                });
-                
-                // If not arrow buttons, add current class to clicked number
-                if(!this.querySelector('i')) {
-                    this.classList.add('current');
+
+
+        // Load news articles from Firestore
+        async function loadNewsArticles() {
+            try {
+                const q = query(collection(window.db, 'news'), orderBy('createdAt', 'desc'));
+                const querySnapshot = await getDocs(q);
+                const newsArticles = document.querySelector('.news-articles');
+
+                if (querySnapshot.empty) {
+                    // Default articles if no news in Firestore
+                    newsArticles.innerHTML = `
+                        <article class="news-article">
+                            <div class="article-img">
+                                <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="New Halal Standards">
+                            </div>
+                            <div class="article-content">
+                                <div class="article-meta">
+                                    <div class="article-date">
+                                        <i class="far fa-calendar"></i> June 15, 2023
+                                    </div>
+                                </div>
+                                <h3 class="article-title">New Halal Standards for Food Processing in Nigeria</h3>
+                                <p class="article-excerpt">The Halal Certification Authority Nigeria has released updated guidelines for food processing facilities seeking Halal certification. These new standards align with international best practices and ensure higher quality control for consumers across Nigeria and export markets.</p>
+
+                                <div class="article-full" id="default-article1-full" style="display: none;">
+                                    <p>The Halal Certification Authority (HCA) Nigeria is pleased to announce the release of updated Halal standards for food processing facilities across the country. These comprehensive guidelines represent a significant step forward in ensuring the highest quality of Halal certification for Nigerian consumers and export markets.</p>
+                                    <h4>Key Updates in the New Standards</h4>
+                                    <ul>
+                                        <li><strong>Enhanced Traceability Requirements:</strong> All Halal-certified facilities must now implement comprehensive tracking systems for raw materials from source to finished product.</li>
+                                        <li><strong>Improved Sanitation Protocols:</strong> New guidelines for cleaning and sanitation procedures to prevent cross-contamination with non-Halal products.</li>
+                                        <li><strong>Staff Training Mandates:</strong> Mandatory Halal awareness training for all employees working in certified facilities.</li>
+                                        <li><strong>Documentation Standards:</strong> Streamlined documentation requirements for easier compliance and auditing.</li>
+                                    </ul>
+                                </div>
+
+                                <button class="read-more" data-article="default-article1">
+                                    Read More <i class="fas fa-chevron-down"></i>
+                                </button>
+                            </div>
+                        </article>
+
+                        <article class="news-article">
+                            <div class="article-img">
+                                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Partnership Announcement">
+                            </div>
+                            <div class="article-content">
+                                <div class="article-meta">
+                                    <div class="article-date">
+                                        <i class="far fa-calendar"></i> May 28, 2023
+                                    </div>
+                                </div>
+                                <h3 class="article-title">HCA Nigeria Signs MoU with Saudi Food and Drug Authority</h3>
+                                <p class="article-excerpt">In a landmark agreement, HCA Nigeria has signed a Memorandum of Understanding with the Saudi Food and Drug Authority (SFDA) to streamline Halal certification for Nigerian exporters. This partnership will facilitate easier access to Saudi markets for Nigerian Halal products.</p>
+
+                                <div class="article-full" id="default-article2-full" style="display: none;">
+                                    <p>The Halal Certification Authority Nigeria has entered into a historic partnership with the Saudi Food and Drug Authority (SFDA), marking a significant milestone in Nigeria's Halal export industry.</p>
+                                    <h4>Key Benefits of the Partnership</h4>
+                                    <ul>
+                                        <li><strong>Streamlined Certification:</strong> Nigerian exporters will benefit from simplified certification processes for the Saudi market.</li>
+                                        <li><strong>Reciprocal Recognition:</strong> HCA Nigeria-certified products will be recognized by SFDA, reducing duplicate certification requirements.</li>
+                                        <li><strong>Capacity Building:</strong> Joint training programs for Nigerian Halal auditors and inspectors.</li>
+                                        <li><strong>Market Access:</strong> Enhanced access to the lucrative Saudi market for Nigerian Halal food, cosmetics, and pharmaceutical products.</li>
+                                    </ul>
+                                </div>
+
+                                <button class="read-more" data-article="default-article2">
+                                    Read More <i class="fas fa-chevron-down"></i>
+                                </button>
+                            </div>
+                        </article>
+                    `;
+                    return;
                 }
-                
-                // Smooth scroll to top of news section
-                window.scrollTo({
-                    top: document.querySelector('.news-page').offsetTop - 90,
-                    behavior: 'smooth'
+
+                // Create articles from Firestore data
+                const articlesHTML = [];
+                querySnapshot.forEach((doc) => {
+                    const news = doc.data();
+                    const imageSrc = news.image || 'https://images.unsplash.com/photo-1586201375761-83865001e31c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80';
+
+                    articlesHTML.push(`
+                        <article class="news-article">
+                            <div class="article-img">
+                                <img src="${imageSrc}" alt="${news.title}">
+                            </div>
+                            <div class="article-content">
+                                <div class="article-meta">
+                                    <div class="article-date">
+                                        <i class="far fa-calendar"></i> ${news.date}
+                                    </div>
+                                </div>
+                                <h3 class="article-title">${news.title}</h3>
+                                <p class="article-excerpt">${news.excerpt}</p>
+
+                                <div class="article-full" id="article-${doc.id}-full" style="display: none;">
+                                    ${news.content}
+                                </div>
+
+                                <button class="read-more" data-article="article-${doc.id}">
+                                    Read More <i class="fas fa-chevron-down"></i>
+                                </button>
+                            </div>
+                        </article>
+                    `);
                 });
-            });
+
+                newsArticles.innerHTML = articlesHTML.join('');
+
+                // Add animation to articles
+                setTimeout(() => {
+                    document.querySelectorAll('.news-article').forEach((article, index) => {
+                        setTimeout(() => {
+                            article.classList.add('visible');
+                        }, index * 100);
+                    });
+                }, 100);
+
+                // Re-observe new articles
+                document.querySelectorAll('.news-article').forEach(article => {
+                    observer.observe(article);
+                });
+
+            } catch (error) {
+                console.error('Error loading news:', error);
+                // Fallback to default content if Firestore fails
+                loadNewsArticles();
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadNewsArticles();
         });
-        
+
         // Add hover effect to articles
-        document.querySelectorAll('.news-article').forEach(article => {
-            article.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px)';
-                this.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.1)';
-            });
-            
-            article.addEventListener('mouseleave', function() {
-                if (!this.classList.contains('expanded')) {
-                    this.style.transform = 'translateY(0)';
-                    this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.05)';
+        document.addEventListener('mouseover', function(e) {
+            if (e.target.closest('.news-article')) {
+                const article = e.target.closest('.news-article');
+                article.style.transform = 'translateY(-10px)';
+                article.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        document.addEventListener('mouseout', function(e) {
+            if (e.target.closest('.news-article')) {
+                const article = e.target.closest('.news-article');
+                if (!article.classList.contains('expanded')) {
+                    article.style.transform = 'translateY(0)';
+                    article.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.05)';
                 }
-            });
+            }
         });
     </script>
 </body>

@@ -1,4 +1,3 @@
-make the management-team section, be slide
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,8 +62,6 @@ make the management-team section, be slide
         
         .containerr {
             width: 100%;
-            /* max-width: 1200px; */
-            /* margin: 0 auto; */
             padding: 0 20px;
         }
 
@@ -95,7 +92,7 @@ make the management-team section, be slide
         }
 
         .section {
-            padding: 30px 0;
+            padding: 80px 0;
         }
 
         .section-title {
@@ -210,10 +207,7 @@ make the management-team section, be slide
             padding-top: 100px;
             padding-bottom: 30px;
             background: linear-gradient(rgba(10, 92, 54, 0.85), rgba(10, 92, 54, 0.9)), url('https://images.unsplash.com/photo-1610360655260-bb6dcc4ac75c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
-            /* background-size: cover;
-            background-position: center; */
             background-attachment: fixed;
-            /* min-height: calc(100vh - 90px); */
             display: flex;
             align-items: center;
         }
@@ -535,86 +529,6 @@ make the management-team section, be slide
             gap: 10px;
         }
 
-        /* Management Team Section */
-        .management-team {
-            background-color: #f9f9f9;
-        }
-
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-
-        .team-member {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            transition: var(--transition);
-            text-align: center;
-        }
-
-        .team-member:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .member-image {
-            height: 250px;
-            overflow: hidden;
-        }
-
-        .member-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .team-member:hover .member-image img {
-            transform: scale(1.1);
-        }
-
-        .member-info {
-            padding: 25px;
-        }
-
-        .member-name {
-            color: var(--primary-color);
-            margin-bottom: 5px;
-        }
-
-        .member-position {
-            color: var(--accent-color);
-            font-weight: 500;
-            margin-bottom: 15px;
-        }
-
-        .member-bio {
-            color: var(--gray-color);
-            font-size: 0.95rem;
-            margin-bottom: 15px;
-        }
-
-        .member-social {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .member-social a {
-            color: var(--primary-color);
-            font-size: 1.1rem;
-            transition: var(--transition);
-        }
-
-        .member-social a:hover {
-            color: var(--accent-color);
-            transform: translateY(-3px);
-        }
-
         /* Certification Process Section */
         .certification-process {
             background-color: white;
@@ -828,6 +742,75 @@ make the management-team section, be slide
         .testimonial-dot.active {
             background-color: var(--primary-color);
             transform: scale(1.2);
+        }
+        
+        /* Leadership Team Section */
+        .leadership {
+            padding: 30px 0;
+            background-color: white;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-member {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: var(--transition);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .team-member.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .member-img {
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .member-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .team-member:hover .member-img img {
+            transform: scale(1.05);
+        }
+
+        .member-info {
+            padding: 25px;
+            text-align: center;
+        }
+
+        .member-name {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .member-title {
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+
+        .member-bio {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            line-height: 1.6;
         }
 
         /* FAQs Section */
@@ -1116,7 +1099,7 @@ make the management-team section, be slide
                     <p>Nigeria | Ensuring Halal Compliance</p> -->
                 </div>
             </div>
-            
+             
             <div class="mobile-toggle" id="mobileToggle">
                 <i class="fas fa-bars"></i>
             </div>
@@ -1126,7 +1109,7 @@ make the management-team section, be slide
                     <li><a href="#home" class="active">Home</a></li>
                     <li><a href="aboutus.html">About</a></li>
                     <li><a href="Services.html">Services</a></li>
-                    <li><a href="Services.html#process">Certification Process</a></li>
+                    <li><a href="Services.html#process">Online Certification Portal</a></li>
                     <li><a href="news.html">News</a></li>
                     <li><a href="conatct.html">Contact</a></li>
                 </ul>
@@ -1300,9 +1283,6 @@ make the management-team section, be slide
         </div>
     </section>
 
-    <!-- Management Team Section -->
-    
-
     <!-- Certification Process Section -->
     <section class="certification-process section" id="process">
         <div class="container">
@@ -1336,6 +1316,58 @@ make the management-team section, be slide
                     <div class="step-number">5</div>
                     <h3>Certificate Issuance</h3>
                     <p>Successful applicants receive their halal certificate valid for one year (renewable).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Team Section -->
+       <section class="leadership">
+        <div class="container">
+            <h2 class="section-title">Our Leadership Team</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-img">
+                        <img src="" alt="Dr. Ahmed Ibrahim">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Dr. Ahmed Ibrahim</h3>
+                        <div class="member-title">Director General</div>
+                        <p class="member-bio">With over 20 years of experience in Islamic jurisprudence and Halal standards, Dr. Ibrahim leads HCA Nigeria's strategic direction and international relations.</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-img">
+                        <img src="" alt="Hajiya Fatima Abdul">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Hajiya Fatima Abdul</h3>
+                        <div class="member-title">Head of Certification</div>
+                        <p class="member-bio">A food technologist with 15 years of Halal industry experience, Hajiya Fatima oversees all certification processes and quality assurance.</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-img">
+                        <img src="" alt="Alhaji Musa Bello">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Alhaji Musa Bello</h3>
+                        <div class="member-title">Chairman, Shariah Board</div>
+                        <p class="member-bio">A respected Islamic scholar, Alhaji Musa leads the Shariah Advisory Board that ensures all HCA certifications comply with Islamic law.</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-img">
+                        <img src="" alt="Engr. Chinedu Okoro">
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Engr. Chinedu Okoro</h3>
+                        <div class="member-title">Technical Director</div>
+                        <p class="member-bio">An engineer with expertise in food processing and quality systems, Engr. Okoro manages technical audits and facility inspections.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1389,8 +1421,6 @@ make the management-team section, be slide
                     <h3>Restaurants & Hotels</h3>
                     <p>Certification for food service establishments to ensure Halal compliance in preparation and serving.</p>
                 </div>
-                
-                <!--  -->
                 
                 <div class="service-card">
                     <div class="service-icon">
@@ -1644,7 +1674,6 @@ make the management-team section, be slide
       import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
       // Your web app's Firebase configuration
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
       const firebaseConfig = {
         apiKey: "AIzaSyC-rfIMVhvTtOoCfy54TRKd_uBtV6Rm_BU",
         authDomain: "halal-cert-ba673.firebaseapp.com",
@@ -1944,63 +1973,134 @@ make the management-team section, be slide
             });
         }
 
-        // Team Slider Functionality
-        const teamSlides = document.querySelectorAll('.team-slide');
-        const teamDots = document.querySelectorAll('.team-slider-dot');
-        const prevTeamBtn = document.getElementById('prevTeamSlide');
-        const nextTeamBtn = document.getElementById('nextTeamSlide');
+        
+        
         let currentTeamSlide = 0;
-
-        // Function to show a specific team slide
-        function showTeamSlide(index) {
-            // Hide all slides
-            teamSlides.forEach(slide => {
-                slide.classList.remove('active');
-            });
-
-            // Remove active class from all dots
-            teamDots.forEach(dot => {
+        const teamSlides = document.querySelectorAll('.team-carousel-slide');
+        let autoSlideInterval;
+        
+        // Set total slides
+        totalSlidesSpan.textContent = teamSlides.length;
+        
+        // Function to go to a specific slide
+        function goToTeamSlide(index) {
+            // Update carousel position
+            teamCarouselTrack.style.transform = `translateX(-${index * 100}%)`;
+            
+            // Update active dot
+            carouselDots.forEach(dot => {
                 dot.classList.remove('active');
             });
-
-            // Show the selected slide and activate corresponding dot
-            teamSlides[index].classList.add('active');
-            teamDots[index].classList.add('active');
+            carouselDots[index].classList.add('active');
+            
+            // Update slide counter
+            currentSlideSpan.textContent = index + 1;
+            
             currentTeamSlide = index;
-
-            // Update slider position
-            const teamSlider = document.querySelector('.team-slider');
-            teamSlider.style.transform = `translateX(-${index * 100}%)`;
         }
-
-        // Event listeners for team slider dots
-        teamDots.forEach((dot, index) => {
+        
+        // Next slide function
+        function nextTeamSlide() {
+            const nextIndex = (currentTeamSlide + 1) % teamSlides.length;
+            goToTeamSlide(nextIndex);
+        }
+        
+        // Previous slide function
+        function prevTeamSlide() {
+            const prevIndex = currentTeamSlide === 0 ? teamSlides.length - 1 : currentTeamSlide - 1;
+            goToTeamSlide(prevIndex);
+        }
+        
+        // Event listeners for navigation buttons
+        if (prevTeamBtn) {
+            prevTeamBtn.addEventListener('click', () => {
+                prevTeamSlide();
+                resetAutoSlide();
+            });
+        }
+        
+        if (nextTeamBtn) {
+            nextTeamBtn.addEventListener('click', () => {
+                nextTeamSlide();
+                resetAutoSlide();
+            });
+        }
+        
+        // Event listeners for dots
+        carouselDots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
-                showTeamSlide(index);
+                goToTeamSlide(index);
+                resetAutoSlide();
             });
         });
-
-        // Previous team slide button functionality
-        if(prevTeamBtn) {
-            prevTeamBtn.addEventListener('click', () => {
-                currentTeamSlide = currentTeamSlide > 0 ? currentTeamSlide - 1 : teamSlides.length - 1;
-                showTeamSlide(currentTeamSlide);
+        
+        // Auto slide functionality
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(nextTeamSlide, 6000);
+        }
+        
+        function resetAutoSlide() {
+            clearInterval(autoSlideInterval);
+            startAutoSlide();
+        }
+        
+        // Pause auto-slide on hover
+        const teamCarousel = document.querySelector('.team-carousel');
+        if (teamCarousel) {
+            teamCarousel.addEventListener('mouseenter', () => {
+                clearInterval(autoSlideInterval);
+            });
+            
+            teamCarousel.addEventListener('mouseleave', () => {
+                startAutoSlide();
             });
         }
-
-        // Next team slide button functionality
-        if(nextTeamBtn) {
-            nextTeamBtn.addEventListener('click', () => {
-                currentTeamSlide = currentTeamSlide < teamSlides.length - 1 ? currentTeamSlide + 1 : 0;
-                showTeamSlide(currentTeamSlide);
-            });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevTeamSlide();
+                resetAutoSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextTeamSlide();
+                resetAutoSlide();
+            }
+        });
+        
+        // Swipe functionality for touch devices
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        if (teamCarouselTrack) {
+            teamCarouselTrack.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+            
+            teamCarouselTrack.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
         }
-
-        // Auto-advance team slides every 6 seconds
-        setInterval(() => {
-            currentTeamSlide = currentTeamSlide < teamSlides.length - 1 ? currentTeamSlide + 1 : 0;
-            showTeamSlide(currentTeamSlide);
-        }, 6000);
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) {
+                    // Swipe left - next slide
+                    nextTeamSlide();
+                } else {
+                    // Swipe right - previous slide
+                    prevTeamSlide();
+                }
+                resetAutoSlide();
+            }
+        }
+        
+        // Initialize the carousel
+        goToTeamSlide(0);
+        startAutoSlide();
 
         // Load news from Firestore
         async function loadNews() {
