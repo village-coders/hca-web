@@ -206,7 +206,7 @@
 
         /* Hero Section with Only Slider and News */
         .hero-container {
-            padding-top: 150px;
+            padding-top: 100px;
             padding-bottom: 30px;
             background: linear-gradient(rgba(10, 92, 54, 0.85), rgba(10, 92, 54, 0.9)), url('https://images.unsplash.com/photo-1610360655260-bb6dcc4ac75c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');
             /* background-size: cover;
@@ -427,6 +427,46 @@
             text-align: center;
             padding-top: 20px;
             border-top: 1px solid #eee;
+        }
+
+        /* News Marquee Styles */
+        .news-marquee {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .marquee-container {
+            display: flex;
+            white-space: nowrap;
+            animation: scroll-left 30s linear infinite;
+        }
+
+        .marquee-item {
+            display: inline-block;
+            padding: 0 40px;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .marquee-item i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+
+        @keyframes scroll-left {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .news-marquee:hover .marquee-container {
+            animation-play-state: paused;
         }
 
         /* About Section */
@@ -1068,16 +1108,11 @@
             <div class="logo-container">
                 <!-- Logo image space -->
                 <div class="logo-img">
-                    <!-- <svg width="60" height="60" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="100" height="100" rx="20" fill="#0a5c36"/>
-                        <circle cx="50" cy="40" r="15" fill="#d4af37"/>
-                        <path d="M50,65 L35,80 L65,80 Z" fill="#ffffff"/>
-                        <text x="50" y="95" text-anchor="middle" fill="white" font-family="Arial" font-size="12">HCA</text>
-                    </svg> -->
+                   <img src="/image/hcaLogo.png" alt="HCA Logo" class="logo-img">
                 </div>
                 <div class="logo-text">
-                    <h1>Halal Certification Authority</h1>
-                    <p>Nigeria | Ensuring Halal Compliance</p>
+                    <!-- <h1>Halal Certification Authority</h1>
+                    <p>Nigeria | Ensuring Halal Compliance</p> -->
                 </div>
             </div>
             
@@ -1087,12 +1122,12 @@
             
             <nav>
                 <ul class="nav-menu" id="navMenu">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#management">Management</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#process">Certification Process</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="aboutus.html">About</a></li>
+                    <li><a href="Services.html">Services</a></li>
+                    <li><a href="Services.html#process">Certification Process</a></li>
+                    <li><a href="news.html">News</a></li>
+                    <li><a href="conatct.html">Contact</a></li>
                 </ul>
             </nav>
         </div>
@@ -1217,6 +1252,29 @@
                             <div class="slider-btn" data-slide="4"></div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Marquee -->
+    <section class="news-marquee">
+        <div class="containerr">
+            <div class="marquee-container">
+                <div class="marquee-item">
+                    <i class="fas fa-newspaper"></i> New Halal Standards for Food Processing - HCA Nigeria releases updated guidelines for food processing facilities seeking Halal certification to align with international standards.
+                </div>
+                <div class="marquee-item">
+                    <i class="fas fa-handshake"></i> Partnership with Saudi Food Authority - HCA Nigeria signs MoU with Saudi Food and Drug Authority to streamline Halal certification for Nigerian exporters.
+                </div>
+                <div class="marquee-item">
+                    <i class="fas fa-users"></i> Halal Awareness Workshop in Lagos - Successful completion of our Halal certification workshop for restaurants and food service providers in Lagos state.
+                </div>
+                <div class="marquee-item">
+                    <i class="fas fa-globe"></i> New Certification Portal Launch - We've launched a new online portal for easier application and tracking of Halal certification requests.
+                </div>
+                <div class="marquee-item">
+                    <i class="fas fa-award"></i> International Recognition Achieved - HCA Nigeria receives accreditation from the World Halal Food Council, expanding our international recognition.
                 </div>
             </div>
         </div>
@@ -1410,13 +1468,7 @@
                     <p>Certification for food service establishments to ensure Halal compliance in preparation and serving.</p>
                 </div>
                 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-pump-medical"></i>
-                    </div>
-                    <h3>Cosmetics & Pharma</h3>
-                    <p>Halal verification for personal care products, cosmetics, and pharmaceutical items.</p>
-                </div>
+                <!--  -->
                 
                 <div class="service-card">
                     <div class="service-icon">
@@ -1622,12 +1674,7 @@
             <div class="footer-content">
                 <div class="footer-logo">
                     <div class="logo-img">
-                        <svg width="70" height="70" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="100" height="100" rx="20" fill="#d4af37"/>
-                            <circle cx="50" cy="40" r="15" fill="#0a5c36"/>
-                            <path d="M50,65 L35,80 L65,80 Z" fill="#ffffff"/>
-                            <text x="50" y="95" text-anchor="middle" fill="white" font-family="Arial" font-size="12">HCA</text>
-                        </svg>
+                        <img src="/image/hcaLogo.png" alt="">
                     </div>
                     <div class="footer-about">
                         <p>The Halal Certification Authority Nigeria is the leading body for Halal certification in Nigeria, ensuring products and services comply with Islamic Shariah law.</p>
@@ -1639,11 +1686,11 @@
                     <h3>Quick Links</h3>
                     <ul>
                         <li><a href="#home">Home</a></li>
-                        <li><a href="#about">About Us</a></li>
+                        <li><a href="aboutus.html">About Us</a></li>
                         <li><a href="#management">Management Team</a></li>
-                        <li><a href="#services">Services</a></li>
+                        <li><a href="Services.html">Services</a></li>
                         <li><a href="#process">Certification Process</a></li>
-                        <li><a href="#contact">Contact Us</a></li>
+                        <li><a href="conatct.html">Contact Us</a></li>
                     </ul>
                 </div>
                 
