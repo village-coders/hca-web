@@ -743,74 +743,342 @@
             background-color: var(--primary-color);
             transform: scale(1.2);
         }
-        
-        /* Leadership Team Section */
-        .leadership {
-            padding: 30px 0;
-            background-color: white;
-        }
 
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
-        }
-
-        .team-member {
-            background-color: #f8f9fa;
-            border-radius: 8px;
+        /* Management Team Section - CAROUSEL STYLE */
+        .management-team {
+            background-color: #f9f9f9;
+            position: relative;
             overflow: hidden;
-            transition: var(--transition);
-            opacity: 0;
-            transform: translateY(30px);
         }
 
-        .team-member.visible {
+        .team-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 50px;
+            color: var(--gray-color);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        /* Team Carousel Container */
+        .team-carousel-wrapper {
+            position: relative;
+            /* max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 60px; */
+        }
+
+        .team-carousel {
+            overflow: hidden;
+            border-radius: 16px;
+            background: linear-gradient(145deg, #ffffff, #f5f5f5);
+            position: relative;
+        }
+
+        .team-carousel-track {
+            display: flex;
+            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            will-change: transform;
+            padding: 0 10px;
+        }
+
+        .team-carousel-slide {
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Team Member Cards */
+        .team-member {
+            background-color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            flex: 0 0 270px;
+            max-width: 270px;
+            border: 1px solid rgba(10, 92, 54, 0.1);
+            position: relative;
+            opacity: 0.7;
+            transform: scale(0.9);
+            filter: brightness(0.95);
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .team-member.active {
             opacity: 1;
-            transform: translateY(0);
+            transform: scale(1);
+            filter: brightness(1);
+            box-shadow: 0 20px 40px rgba(10, 92, 54, 0.15);
+            border-color: var(--accent-color);
+            z-index: 2;
+        }
+
+        .team-member.prev, .team-member.next {
+            opacity: 0.85;
+            transform: scale(0.95);
+            filter: brightness(0.98);
         }
 
         .team-member:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            transform: scale(1.05) translateY(-10px);
+            box-shadow: 0 25px 50px rgba(10, 92, 54, 0.2);
+            border-color: var(--primary-color);
+            z-index: 3;
         }
 
         .member-img {
-            height: 250px;
+            height: 240px;
             overflow: hidden;
+            position: relative;
+            background: linear-gradient(145deg, #f0f0f0, #e0e0e0);
+        }
+
+        .member-img:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 60%, rgba(10, 92, 54, 0.15) 100%);
+            z-index: 1;
         }
 
         .member-img img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: var(--transition);
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
         .team-member:hover .member-img img {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
         .member-info {
-            padding: 25px;
+            padding: 25px 20px;
             text-align: center;
+            position: relative;
+            background: linear-gradient(to bottom, white, #f8f9fa);
         }
 
         .member-name {
             color: var(--primary-color);
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            transition: var(--transition);
         }
 
         .member-title {
             color: var(--accent-color);
-            font-weight: 500;
-            margin-bottom: 15px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
         }
 
-        .member-bio {
+        .member-qualification {
             color: var(--gray-color);
+            font-size: 0.85rem;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+
+        .member-experience {
+            color: var(--dark-color);
             font-size: 0.9rem;
-            line-height: 1.6;
+            line-height: 1.4;
+            opacity: 0.9;
+        }
+
+        /* Carousel Navigation */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: white;
+            color: var(--primary-color);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            border: 2px solid rgba(10, 92, 54, 0.1);
+        }
+
+        .carousel-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 15px 35px rgba(10, 92, 54, 0.25);
+            border-color: var(--primary-color);
+        }
+
+        .carousel-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .carousel-btn.prev {
+            left: 10px;
+        }
+
+        .carousel-btn.next {
+            right: 10px;
+        }
+
+        /* Carousel Dots */
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 40px;
+            align-items: center;
+        }
+
+        .carousel-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: #ddd;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+        }
+
+        .carousel-dot.active {
+            background-color: var(--primary-color);
+            transform: scale(1.3);
+            box-shadow: 0 0 0 4px rgba(10, 92, 54, 0.2);
+        }
+
+        .carousel-dot:hover {
+            transform: scale(1.2);
+            background-color: var(--secondary-color);
+        }
+
+        /* Slide Counter */
+        .slide-counter {
+            text-align: center;
+            margin-top: 25px;
+            color: var(--gray-color);
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .slide-counter span {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .counter-separator {
+            color: var(--accent-color);
+            font-weight: 500;
+        }
+
+        /* Responsive Design for Carousel */
+        @media (max-width: 1200px) {
+            .team-carousel-wrapper {
+                padding: 0 50px;
+            }
+            
+            .team-member {
+                flex: 0 0 240px;
+                max-width: 240px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .team-carousel-wrapper {
+                padding: 0 40px;
+            }
+            
+            .team-member {
+                flex: 0 0 220px;
+                max-width: 220px;
+            }
+            
+            .carousel-btn {
+                width: 55px;
+                height: 55px;
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .team-carousel-wrapper {
+                padding: 0 30px;
+            }
+            
+            .team-carousel-slide {
+                gap: 20px;
+                padding: 15px;
+            }
+            
+            .team-member {
+                flex: 0 0 200px;
+                max-width: 200px;
+            }
+            
+            .carousel-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+            
+            .carousel-btn.prev {
+                left: 5px;
+            }
+            
+            .carousel-btn.next {
+                right: 5px;
+            }
+            
+            .carousel-dots {
+                margin-top: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .team-carousel-wrapper {
+                padding: 0 15px;
+            }
+            
+            .team-carousel-slide {
+                gap: 15px;
+                padding: 10px;
+            }
+            
+            .team-member {
+                flex: 0 0 180px;
+                max-width: 180px;
+            }
+            
+            .carousel-btn {
+                display: none;
+            }
+            
+            .carousel-dots {
+                gap: 8px;
+                margin-top: 25px;
+            }
         }
 
         /* FAQs Section */
@@ -1109,7 +1377,7 @@
                     <li><a href="#home" class="active">Home</a></li>
                     <li><a href="aboutus.html">About</a></li>
                     <li><a href="Services.html">Services</a></li>
-                    <li><a href="Services.html#process">Online Certification Portal</a></li>
+                    <li><a href="https://halal-certification-authority.vercel.app/">Online Certification Portal</a></li>
                     <li><a href="news.html">News</a></li>
                     <li><a href="conatct.html">Contact</a></li>
                 </ul>
@@ -1321,53 +1589,159 @@
         </div>
     </section>
 
-    <!-- Leadership Team Section -->
-       <section class="leadership">
-        <div class="container">
-            <h2 class="section-title">Our Leadership Team</h2>
-            <div class="team-grid">
-                <div class="team-member">
-                    <div class="member-img">
-                        <img src="" alt="Dr. Ahmed Ibrahim">
+    <!-- Management Team Section - CAROUSEL STYLE -->
+    <section class="management-team section" id="management">
+        <div class="containerr">
+            <h2 class="section-title">Our Executive Leadership</h2>
+            <p class="team-intro">Our management team consists of seasoned professionals with decades of combined experience in halal certification, food science, Islamic jurisprudence, and quality assurance. Meet the experts who ensure HCA Nigeria maintains the highest standards of halal compliance.</p>
+            
+            <div class="team-carousel-wrapper">
+                <div class="team-carousel">
+                    <div class="team-carousel-track">
+                        <!-- Slide 1: 4 team members -->
+                        <div class="team-carousel-slide">
+                            <div class="team-member active">
+                                <div class="member-img">
+                                    <img src="/image/oreagba.jpg" alt="">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Prof Ibrahim Adekunle Oreagba</h3>
+                                    <div class="member-title">Executive Chiarman</div>
+                                    <div class="member-qualification">PhD FPCPharm</div>
+                                    <div class="member-experience"></div>
+                                </div>
+                            </div>
+                            <div class="team-member next">
+                                <div class="member-img">
+                                    <img src="/image/Ajanik3.png" alt="Ajanik">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Ajanik</h3>
+                                    <div class="member-title">Operations Manager</div>
+                                    <div class="member-qualification">MSc, Quality Management</div>
+                                    <div class="member-experience">15+ years in halal operations and process optimization</div>
+                                </div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-img">
+                                    <img src="/image/ajanish.jpg" alt="Ajanish">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Ajanish</h3>
+                                    <div class="member-title">Quality Assurance Lead</div>
+                                    <div class="member-qualification">BSc, Food Science</div>
+                                    <div class="member-experience">12+ years in quality control and halal compliance</div>
+                                </div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-img">
+                                    <img src="/image/Alhaji-Ajala.jpeg" alt="Alhaji Ajala">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Alhaji Ajala</h3>
+                                    <div class="member-title">Shariah Advisor</div>
+                                    <div class="member-qualification">Islamic Studies, Al-Azhar University</div>
+                                    <div class="member-experience">25+ years in Islamic jurisprudence</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 2: 4 team members -->
+                        <div class="team-carousel-slide">
+                            <div class="team-member">
+                                <div class="member-img">
+                                    <img src="/image/basiratorea.png" alt="Basira Torea">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Basira Torea</h3>
+                                    <div class="member-title">Certification Specialist</div>
+                                    <div class="member-qualification">MSc, Food Safety</div>
+                                    <div class="member-experience">10+ years in halal certification and standards</div>
+                                </div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-img">
+                                    <img src="/image/oreagba.jpg" alt="Oreagba">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Oreagba</h3>
+                                    <div class="member-title">Technical Director</div>
+                                    <div class="member-qualification">PhD, Chemical Engineering</div>
+                                    <div class="member-experience">20+ years in food processing technology</div>
+                                </div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-img">
+                                    <img src="/image/sherif.jpg" alt="Sherif">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Sherif</h3>
+                                    <div class="member-title">Compliance Officer</div>
+                                    <div class="member-qualification">LLB, Law</div>
+                                    <div class="member-experience">14+ years in regulatory compliance</div>
+                                </div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-img">
+                                    <img src="/image/tirmidhi.jpg" alt="Tirmidhi">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Tirmidhi</h3>
+                                    <div class="member-title">Audit Manager</div>
+                                    <div class="member-qualification">MBA, Quality Systems</div>
+                                    <div class="member-experience">16+ years in audit management</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Slide 3: 2 team members (can adjust spacing) -->
+                        <div class="team-carousel-slide">
+                            <div class="team-member">
+                                <div class="member-img">
+                                    <img src="/image/WhatsApp-Image-2024-12-30-at-4.00.04-PM.jpeg" alt="Dr. Ahmed Ibrahim">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Dr. Ahmed Ibrahim</h3>
+                                    <div class="member-title">Director General</div>
+                                    <div class="member-qualification">PhD, Islamic Economics</div>
+                                    <div class="member-experience">22+ years in halal industry leadership</div>
+                                </div>
+                            </div>
+                            <div class="team-member">
+                                <div class="member-img">
+                                    <img src="/image/WhatsApp-Image-2024-12-30-at-5.14.02-PM.jpeg" alt="Hajiya Fatima Abdul">
+                                </div>
+                                <div class="member-info">
+                                    <h3 class="member-name">Hajiya Fatima Abdul</h3>
+                                    <div class="member-title">Head of Certification</div>
+                                    <div class="member-qualification">MSc, Food Technology</div>
+                                    <div class="member-experience">18+ years in halal certification processes</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="member-info">
-                        <h3 class="member-name">Dr. Ahmed Ibrahim</h3>
-                        <div class="member-title">Director General</div>
-                        <p class="member-bio">With over 20 years of experience in Islamic jurisprudence and Halal standards, Dr. Ibrahim leads HCA Nigeria's strategic direction and international relations.</p>
-                    </div>
+
+                    <!-- Navigation Buttons -->
+                    <button class="carousel-btn prev" id="prevTeamBtn" aria-label="Previous slide">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="carousel-btn next" id="nextTeamBtn" aria-label="Next slide">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
-                
-                <div class="team-member">
-                    <div class="member-img">
-                        <img src="" alt="Hajiya Fatima Abdul">
-                    </div>
-                    <div class="member-info">
-                        <h3 class="member-name">Hajiya Fatima Abdul</h3>
-                        <div class="member-title">Head of Certification</div>
-                        <p class="member-bio">A food technologist with 15 years of Halal industry experience, Hajiya Fatima oversees all certification processes and quality assurance.</p>
-                    </div>
+
+                <!-- Dots Navigation -->
+                <div class="carousel-dots" id="carouselDots">
+                    <span class="carousel-dot active" data-slide="0" aria-label="Go to slide 1"></span>
+                    <span class="carousel-dot" data-slide="1" aria-label="Go to slide 2"></span>
+                    <span class="carousel-dot" data-slide="2" aria-label="Go to slide 3"></span>
                 </div>
-                
-                <div class="team-member">
-                    <div class="member-img">
-                        <img src="" alt="Alhaji Musa Bello">
-                    </div>
-                    <div class="member-info">
-                        <h3 class="member-name">Alhaji Musa Bello</h3>
-                        <div class="member-title">Chairman, Shariah Board</div>
-                        <p class="member-bio">A respected Islamic scholar, Alhaji Musa leads the Shariah Advisory Board that ensures all HCA certifications comply with Islamic law.</p>
-                    </div>
-                </div>
-                
-                <div class="team-member">
-                    <div class="member-img">
-                        <img src="" alt="Engr. Chinedu Okoro">
-                    </div>
-                    <div class="member-info">
-                        <h3 class="member-name">Engr. Chinedu Okoro</h3>
-                        <div class="member-title">Technical Director</div>
-                        <p class="member-bio">An engineer with expertise in food processing and quality systems, Engr. Okoro manages technical audits and facility inspections.</p>
-                    </div>
+
+                <!-- Slide Counter -->
+                <div class="slide-counter">
+                    <span id="currentSlideSpan">1</span> 
+                    <span class="counter-separator">/</span> 
+                    <span id="totalSlidesSpan">3</span>
                 </div>
             </div>
         </div>
@@ -1719,55 +2093,35 @@
         const nextBtn = document.getElementById('nextSlide');
         let currentSlide = 0;
 
-        // Function to show a specific slide
         function showSlide(index) {
-            // Hide all slides
-            heroSlides.forEach(slide => {
-                slide.classList.remove('active');
-            });
-
-            // Remove active class from all buttons
-            sliderBtns.forEach(btn => {
-                btn.classList.remove('active');
-            });
-
-            // Show the selected slide and activate corresponding button
+            heroSlides.forEach(slide => slide.classList.remove('active'));
+            sliderBtns.forEach(btn => btn.classList.remove('active'));
             heroSlides[index].classList.add('active');
             sliderBtns[index].classList.add('active');
             currentSlide = index;
         }
 
-        // Event listeners for slider buttons
         sliderBtns.forEach((btn, index) => {
-            btn.addEventListener('click', () => {
-                showSlide(index);
-            });
+            btn.addEventListener('click', () => showSlide(index));
         });
 
-        // Previous button functionality
         prevBtn.addEventListener('click', () => {
             currentSlide = currentSlide > 0 ? currentSlide - 1 : heroSlides.length - 1;
             showSlide(currentSlide);
         });
 
-        // Next button functionality
         nextBtn.addEventListener('click', () => {
             currentSlide = currentSlide < heroSlides.length - 1 ? currentSlide + 1 : 0;
             showSlide(currentSlide);
         });
 
-        // Auto-advance slides every 5 seconds
         let slideInterval = setInterval(() => {
             currentSlide = currentSlide < heroSlides.length - 1 ? currentSlide + 1 : 0;
             showSlide(currentSlide);
         }, 5000);
 
-        // Pause auto-advance when hovering over slider
         const heroSlider = document.querySelector('.hero-slider');
-        heroSlider.addEventListener('mouseenter', () => {
-            clearInterval(slideInterval);
-        });
-
+        heroSlider.addEventListener('mouseenter', () => clearInterval(slideInterval));
         heroSlider.addEventListener('mouseleave', () => {
             slideInterval = setInterval(() => {
                 currentSlide = currentSlide < heroSlides.length - 1 ? currentSlide + 1 : 0;
@@ -1779,10 +2133,8 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-
                 const targetId = this.getAttribute('href');
                 if(targetId === '#') return;
-
                 const targetElement = document.querySelector(targetId);
                 if(targetElement) {
                     window.scrollTo({
@@ -1799,26 +2151,17 @@
         let currentTestimonial = 0;
 
         function showTestimonial(index) {
-            testimonialSlides.forEach(slide => {
-                slide.classList.remove('active');
-            });
-
-            testimonialDots.forEach(dot => {
-                dot.classList.remove('active');
-            });
-
+            testimonialSlides.forEach(slide => slide.classList.remove('active'));
+            testimonialDots.forEach(dot => dot.classList.remove('active'));
             testimonialSlides[index].classList.add('active');
             testimonialDots[index].classList.add('active');
             currentTestimonial = index;
         }
 
         testimonialDots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                showTestimonial(index);
-            });
+            dot.addEventListener('click', () => showTestimonial(index));
         });
 
-        // Auto-advance testimonials
         setInterval(() => {
             currentTestimonial = currentTestimonial < testimonialSlides.length - 1 ? currentTestimonial + 1 : 0;
             showTestimonial(currentTestimonial);
@@ -1826,39 +2169,23 @@
 
         // FAQs Accordion
         const faqItems = document.querySelectorAll('.faq-item');
-
         faqItems.forEach(item => {
             const question = item.querySelector('.faq-question');
-
             question.addEventListener('click', () => {
-                // Close all other FAQ items
                 faqItems.forEach(otherItem => {
-                    if(otherItem !== item) {
-                        otherItem.classList.remove('active');
-                    }
+                    if(otherItem !== item) otherItem.classList.remove('active');
                 });
-
-                // Toggle current item
                 item.classList.toggle('active');
             });
         });
 
         // Contact Form Submission
         const contactForm = document.getElementById('contactForm');
-
         contactForm.addEventListener('submit', function(e) {
             e.preventDefault();
-
-            // Get form values
             const name = document.getElementById('name').value;
             const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
-
-            // In a real application, you would send this data to a server
-            // For now, we'll just show an alert
             alert(`Thank you ${name}! Your message has been received. We will contact you at ${email} shortly.`);
-
-            // Reset form
             contactForm.reset();
         });
 
@@ -1880,7 +2207,6 @@
             }, 20);
         }
 
-        // Start counter when section is visible
         const statsObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if(entry.isIntersecting) {
@@ -1895,123 +2221,80 @@
 
         statsObserver.observe(statsSection);
 
-        // Process step hover effects
-        document.querySelectorAll('.process-step').forEach(step => {
-            step.addEventListener('mouseenter', function() {
-                this.style.backgroundColor = 'var(--primary-color)';
-                this.style.color = 'white';
-                this.querySelector('h3').style.color = 'white';
-                this.querySelector('.step-number').style.backgroundColor = 'var(--accent-color)';
-                this.querySelector('.step-number').style.color = 'var(--dark-color)';
-            });
-
-            step.addEventListener('mouseleave', function() {
-                this.style.backgroundColor = '#f8f9fa';
-                this.style.color = 'var(--dark-color)';
-                this.querySelector('h3').style.color = 'var(--primary-color)';
-                this.querySelector('.step-number').style.backgroundColor = 'var(--primary-color)';
-                this.querySelector('.step-number').style.color = 'white';
-            });
-        });
-
-        // Team member hover effect
-        document.querySelectorAll('.team-member').forEach(member => {
-            member.addEventListener('mouseenter', function() {
-                this.querySelector('.member-name').style.color = 'var(--accent-color)';
-            });
-
-            member.addEventListener('mouseleave', function() {
-                this.querySelector('.member-name').style.color = 'var(--primary-color)';
-            });
-        });
-
-        // News items click effect
-        document.querySelectorAll('.hero-news-item').forEach(item => {
-            item.addEventListener('click', function() {
-                // In a real application, this would navigate to the full news article
-                // For now, we'll just highlight the clicked item
-                document.querySelectorAll('.hero-news-item').forEach(otherItem => {
-                    otherItem.style.borderLeftColor = 'var(--primary-color)';
-                    otherItem.style.backgroundColor = '#f8f9fa';
-                });
-
-                this.style.borderLeftColor = 'var(--accent-color)';
-                this.style.backgroundColor = '#e9ecef';
-            });
-        });
-
-        // Add scroll animation to service cards
-        const serviceCards = document.querySelectorAll('.service-card');
-        const serviceObserver = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if(entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }, index * 100);
-                }
-            });
-        }, { threshold: 0.1 });
-
-        serviceCards.forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            serviceObserver.observe(card);
-        });
-
-        // Add scroll effect to news container
-        const newsContainer = document.querySelector('.hero-news-list');
-        if(newsContainer) {
-            newsContainer.addEventListener('scroll', function() {
-                // Add subtle shadow when scrolled
-                if(this.scrollTop > 10) {
-                    this.parentElement.style.boxShadow = 'inset 0 5px 10px -5px rgba(0,0,0,0.1), 0 15px 40px rgba(0, 0, 0, 0.2)';
-                } else {
-                    this.parentElement.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.2)';
-                }
-            });
-        }
-
-        
+        // Professional Team Carousel - IMPLEMENTED
+        const teamCarouselTrack = document.querySelector('.team-carousel-track');
+        const prevTeamBtn = document.getElementById('prevTeamBtn');
+        const nextTeamBtn = document.getElementById('nextTeamBtn');
+        const carouselDots = document.querySelectorAll('.carousel-dot');
+        const currentSlideSpan = document.getElementById('currentSlideSpan');
+        const totalSlidesSpan = document.getElementById('totalSlidesSpan');
         
         let currentTeamSlide = 0;
-        const teamSlides = document.querySelectorAll('.team-carousel-slide');
+        const totalTeamSlides = document.querySelectorAll('.team-carousel-slide').length;
+        let isAnimating = false;
         let autoSlideInterval;
         
-        // Set total slides
-        totalSlidesSpan.textContent = teamSlides.length;
+        // Initialize
+        totalSlidesSpan.textContent = totalTeamSlides;
         
-        // Function to go to a specific slide
+        function updateCarouselState() {
+            const allTeamMembers = document.querySelectorAll('.team-member');
+            const currentSlideMembers = document.querySelectorAll(`.team-carousel-slide:nth-child(${currentTeamSlide + 1}) .team-member`);
+            
+            // Reset all members
+            allTeamMembers.forEach(member => {
+                member.classList.remove('active', 'prev', 'next');
+            });
+            
+            // Set active state for current slide members
+            if (currentSlideMembers.length > 0) {
+                currentSlideMembers[0].classList.add('active');
+                
+                if (currentSlideMembers.length > 1) {
+                    currentSlideMembers[1].classList.add('next');
+                }
+                
+                for (let i = 2; i < currentSlideMembers.length; i++) {
+                    currentSlideMembers[i].classList.add('next');
+                }
+            }
+        }
+        
         function goToTeamSlide(index) {
+            if (isAnimating) return;
+            isAnimating = true;
+            
             // Update carousel position
             teamCarouselTrack.style.transform = `translateX(-${index * 100}%)`;
             
             // Update active dot
-            carouselDots.forEach(dot => {
-                dot.classList.remove('active');
-            });
+            carouselDots.forEach(dot => dot.classList.remove('active'));
             carouselDots[index].classList.add('active');
             
             // Update slide counter
             currentSlideSpan.textContent = index + 1;
             
+            // Update current slide
             currentTeamSlide = index;
+            
+            // Update member states after transition
+            setTimeout(() => {
+                updateCarouselState();
+                isAnimating = false;
+            }, 700);
         }
         
-        // Next slide function
         function nextTeamSlide() {
-            const nextIndex = (currentTeamSlide + 1) % teamSlides.length;
+            const nextIndex = (currentTeamSlide + 1) % totalTeamSlides;
             goToTeamSlide(nextIndex);
         }
         
-        // Previous slide function
         function prevTeamSlide() {
-            const prevIndex = currentTeamSlide === 0 ? teamSlides.length - 1 : currentTeamSlide - 1;
+            const prevIndex = currentTeamSlide === 0 ? totalTeamSlides - 1 : currentTeamSlide - 1;
             goToTeamSlide(prevIndex);
         }
         
-        // Event listeners for navigation buttons
+        // Event listeners
         if (prevTeamBtn) {
             prevTeamBtn.addEventListener('click', () => {
                 prevTeamSlide();
@@ -2026,11 +2309,12 @@
             });
         }
         
-        // Event listeners for dots
         carouselDots.forEach((dot, index) => {
             dot.addEventListener('click', () => {
-                goToTeamSlide(index);
-                resetAutoSlide();
+                if (index !== currentTeamSlide) {
+                    goToTeamSlide(index);
+                    resetAutoSlide();
+                }
             });
         });
         
@@ -2044,7 +2328,7 @@
             startAutoSlide();
         }
         
-        // Pause auto-slide on hover
+        // Pause on hover
         const teamCarousel = document.querySelector('.team-carousel');
         if (teamCarousel) {
             teamCarousel.addEventListener('mouseenter', () => {
@@ -2058,16 +2342,22 @@
         
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
-                prevTeamSlide();
-                resetAutoSlide();
-            } else if (e.key === 'ArrowRight') {
-                nextTeamSlide();
-                resetAutoSlide();
+            const teamSection = document.getElementById('management');
+            const isTeamSectionVisible = teamSection.getBoundingClientRect().top >= 0 && 
+                                        teamSection.getBoundingClientRect().top <= window.innerHeight;
+            
+            if (isTeamSectionVisible && !isAnimating) {
+                if (e.key === 'ArrowLeft') {
+                    prevTeamSlide();
+                    resetAutoSlide();
+                } else if (e.key === 'ArrowRight') {
+                    nextTeamSlide();
+                    resetAutoSlide();
+                }
             }
         });
         
-        // Swipe functionality for touch devices
+        // Touch/swipe support
         let touchStartX = 0;
         let touchEndX = 0;
         
@@ -2086,12 +2376,10 @@
             const swipeThreshold = 50;
             const diff = touchStartX - touchEndX;
             
-            if (Math.abs(diff) > swipeThreshold) {
+            if (Math.abs(diff) > swipeThreshold && !isAnimating) {
                 if (diff > 0) {
-                    // Swipe left - next slide
                     nextTeamSlide();
                 } else {
-                    // Swipe right - previous slide
                     prevTeamSlide();
                 }
                 resetAutoSlide();
@@ -2099,8 +2387,23 @@
         }
         
         // Initialize the carousel
-        goToTeamSlide(0);
+        updateCarouselState();
         startAutoSlide();
+        
+        // Team member hover effects
+        document.querySelectorAll('.team-member').forEach(member => {
+            member.addEventListener('mouseenter', function() {
+                if (this.classList.contains('active')) {
+                    this.style.transform = 'scale(1.05) translateY(-10px)';
+                }
+            });
+            
+            member.addEventListener('mouseleave', function() {
+                if (this.classList.contains('active')) {
+                    this.style.transform = 'scale(1)';
+                }
+            });
+        });
 
         // Load news from Firestore
         async function loadNews() {
@@ -2112,7 +2415,6 @@
                 const marqueeContainer = document.getElementById('marqueeContainer');
 
                 if (querySnapshot.empty) {
-                    // Default news items if no news in Firestore
                     heroNewsList.innerHTML = `
                         <div class="hero-news-item">
                             <div class="hero-news-date">
@@ -2137,7 +2439,6 @@
                         </div>
                     `;
 
-                    // Default marquee items
                     marqueeContainer.innerHTML = `
                         <div class="marquee-item">
                             <i class="fas fa-newspaper"></i> New Halal Standards for Food Processing - HCA Nigeria releases updated guidelines for food processing facilities seeking Halal certification to align with international standards.
@@ -2158,11 +2459,8 @@
                     return;
                 }
 
-                // Create hero news items from Firestore data
                 const newsArray = [];
-                querySnapshot.forEach((doc) => {
-                    newsArray.push(doc.data());
-                });
+                querySnapshot.forEach((doc) => newsArray.push(doc.data()));
 
                 const heroNewsHTML = newsArray.slice(0, 5).map(news => `
                     <div class="hero-news-item">
@@ -2176,7 +2474,6 @@
 
                 heroNewsList.innerHTML = heroNewsHTML;
 
-                // Create marquee items from Firestore data
                 const marqueeItems = newsArray.slice(0, 5).map(news => `
                     <div class="marquee-item">
                         <i class="fas fa-newspaper"></i> ${news.title} - ${news.excerpt}
@@ -2187,8 +2484,6 @@
 
             } catch (error) {
                 console.error('Error loading news:', error);
-                // Fallback to default content if Firestore fails
-                loadNews();
             }
         }
 
