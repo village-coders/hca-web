@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Login - HCA</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+        body {
+            background: linear-gradient(135deg, #e6f7ff 0%, #f0f9eb 100%);
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* Animated background particles */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 80%, rgba(26, 95, 122, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(21, 151, 149, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 193, 7, 0.05) 0%, transparent 50%);
+            animation: backgroundFloat 20s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes backgroundFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(1deg); }
+            66% { transform: translateY(10px) rotate(-1deg); }
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            animation: slideInUp 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .login-logo {
+            animation: logoBounce 1s ease-out 0.3s both;
+        }
+
+        .login-logo img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+            animation: logoSpin 2s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
+
+        .login-logo img:hover {
+            transform: scale(1.1);
+        }
+
+        .login-logo h2 {
+            color: #1a5f7a;
+            margin-bottom: 30px;
+            font-weight: 600;
+            font-size: 1.8rem;
+            animation: fadeInText 1s ease-out 0.5s both;
+            position: relative;
+        }
+
+        .login-logo h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, #1a5f7a, #159895);
+            animation: underlineExpand 1s ease-out 0.8s both;
+        }
+
+        @keyframes logoBounce {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes logoSpin {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(5deg); }
+            75% { transform: rotate(-5deg); }
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes underlineExpand {
+            from { width: 0; }
+            to { width: 60px; }
+        }
+
+        .login-form .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+            animation: slideInLeft 0.6s ease-out both;
+        }
+
+        .login-form .form-group:nth-child(1) { animation-delay: 0.6s; }
+        .login-form .form-group:nth-child(2) { animation-delay: 0.8s; }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2d3e50;
+            transition: color 0.3s ease;
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-form input::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(26, 95, 122, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .login-form input:focus::before {
+            left: 100%;
+        }
+
+        .login-form input:focus {
+            border-color: #1a5f7a;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .login-form input:focus + label {
+            color: #1a5f7a;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #1a5f7a, #159895);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+            animation: buttonSlideIn 0.6s ease-out 1s both;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:hover {
+            background: linear-gradient(135deg, #124c63, #0f7674);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(26, 95, 122, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .login-btn.loading {
+            pointer-events: none;
+        }
+
+        .login-btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            margin: auto;
+            border: 2px solid transparent;
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes buttonSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            color: #721c24;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            display: none;
+            text-align: center;
+            animation: errorShake 0.5s ease-in-out;
+            border-left: 4px solid #dc3545;
+        }
+
+        @keyframes errorShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            display: none;
+            text-align: center;
+            animation: successPulse 0.6s ease-in-out;
+            border-left: 4px solid #28a745;
+        }
+
+        @keyframes successPulse {
+            0% { transform: scale(0.95); opacity: 0; }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .login-links {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            animation: fadeInUp 0.6s ease-out 1.2s both;
+        }
+
+        .login-links a {
+            color: #1a5f7a;
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .login-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #1a5f7a;
+            transition: width 0.3s ease;
+        }
+
+        .login-links a:hover::before {
+            width: 100%;
+        }
+
+        .login-links a:hover {
+            color: #124c63;
+            transform: translateY(-1px);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Floating particles animation */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(26, 95, 122, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 6s linear infinite;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 1s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 3s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 5s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 6s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 7s; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 8s; }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Responsive animations */
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 20px;
+                padding: 30px 20px;
+            }
+
+            .login-logo h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA1rBfLt3mQ9oKFTSTYUS149QKZCilUMX8",
+            authDomain: "halal-cret.firebaseapp.com",
+            projectId: "halal-cret",
+            storageBucket: "halal-cret.firebasestorage.app",
+            messagingSenderId: "327578585245",
+            appId: "1:327578585245:web:4872f55784adb4f8b82c74",
+            measurementId: "G-VT3HQCED0Y"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // List of authorized admin emails (you can modify this list as needed)
+        const adminEmails = [
+            'admin@hca.com',
+        'administrator@halalcert.com.ng',
+            'support@halalcert.com.ng'
+            // Add more admin emails here as needed
+        ];
+
+        // Function to check if user is admin
+        async function isUserAdmin(user) {
+            // First check against the predefined admin emails list
+            if (adminEmails.includes(user.email.toLowerCase())) {
+                return true;
+            }
+
+            // Also check Firestore for admin role (optional additional check)
+            try {
+                const userDocRef = doc(db, 'users', user.uid);
+                const userDoc = await getDoc(userDocRef);
+
+                if (userDoc.exists()) {
+                    const userData = userDoc.data();
+                    return userData.role === 'admin' || userData.isAdmin === true;
+                }
+            } catch (error) {
+                console.error('Error checking admin status in Firestore:', error);
+            }
+
+            return false;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('adminLoginForm');
+            const errorElement = document.getElementById('loginError');
+
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                errorElement.style.display = 'none';
+                errorElement.textContent = '';
+
+                const email = document.getElementById('adminEmail').value.trim();
+                const password = document.getElementById('adminPassword').value;
+
+                try {
+                    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                    const user = userCredential.user;
+
+                    // Check if the authenticated user is an admin
+                    const isAdmin = await isUserAdmin(user);
+
+                    if (!isAdmin) {
+                        // Sign out the non-admin user
+                        await auth.signOut();
+                        errorElement.textContent = 'Access denied. This login is restricted to administrators only.';
+                        errorElement.style.display = 'block';
+                        return;
+                    }
+
+                    // User is admin, redirect to admin dashboard
+                    window.location.href = 'admin-dashboard.html';
+                } catch (error) {
+                    let errorMessage = 'Login failed. Please try again.';
+                    switch (error.code) {
+                        case 'auth/user-not-found':
+                            errorMessage = 'No account found with this email address.';
+                            break;
+                        case 'auth/wrong-password':
+                            errorMessage = 'Incorrect password. Please try again.';
+                            break;
+                        case 'auth/invalid-email':
+                            errorMessage = 'Please enter a valid email address.';
+                            break;
+                        case 'auth/user-disabled':
+                            errorMessage = 'This account has been disabled.';
+                            break;
+                        case 'auth/too-many-requests':
+                            errorMessage = 'Too many failed login attempts. Please try again later.';
+                            break;
+                        default:
+                            errorMessage = error.message || errorMessage;
+                    }
+                    errorElement.textContent = errorMessage;
+                    errorElement.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-logo">
+            <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lWR0aD0iNDAiIGhlaWdodD0iNDAiIHJ4PSI4IiBmaWxsPSIjMDA3QTU1Ii8+CjxwYXRoIGQ9Ik0xMiAxMkgyOFYyOEgxMlYyOFoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=" alt="HCA Logo" />
+            <h2>Admin Login</h2>
+        </div>
+        <form id="adminLoginForm" class="login-form" novalidate>
+            <div class="form-group">
+                <label for="adminEmail">Email Address</label>
+                <input type="email" id="adminEmail" name="adminEmail" required placeholder="admin@hca.com" />
+            </div>
+            <div class="form-group">
+                <label for="adminPassword">Password</label>
+                <input type="password" id="adminPassword" name="adminPassword" required placeholder="Enter your password" />
+            </div>
+            <div id="loginError" class="error-message"></div>
+            <button type="submit" class="login-btn">Login to Dashboard</button>
+        </form>
+        <div class="login-links">
+            <a href="index.html">Back to Main Portal</a>
+        </div>
+    </div>
+</body>
+</html>

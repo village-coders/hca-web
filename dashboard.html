@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HCA Certification Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail, sendEmailVerification, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA1rBfLt3mQ9oKFTSTYUS149QKZCilUMX8",
+            authDomain: "halal-cret.firebaseapp.com",
+            projectId: "halal-cret",
+            storageBucket: "halal-cret.firebasestorage.app",
+            messagingSenderId: "327578585245",
+            appId: "1:327578585245:web:4872f55784adb4f8b82c74",
+            measurementId: "G-VT3HQCED0Y"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Make auth available globally
+        window.firebaseAuth = auth;
+        window.createUserWithEmailAndPassword = createUserWithEmailAndPassword;
+        window.signInWithEmailAndPassword = signInWithEmailAndPassword;
+        window.sendPasswordResetEmail = sendPasswordResetEmail;
+        window.sendEmailVerification = sendEmailVerification;
+        window.onAuthStateChanged = onAuthStateChanged;
+        window.signOut = signOut;
+    </script>
+    <style>
+        :root {
+            --primary: #1a5f7a;
+            --primary-dark: #124c63;
+            --secondary: #159895;
+            --accent: #ffc107;
+            --light: #f8f9fa;
+            --dark: #2d3e50;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ff9800;
+            --gray: #6c757d;
+            --white: #ffffff;
+            --card-bg: #ffffff;
+            --border-radius: 8px;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e6f7ff 0%, #f0f9eb 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .portal-container {
+            display: flex;
+            width: 100%;
+            max-width: 1000px;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            min-height: 600px;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-section {
+            flex: 1;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            transform: rotate(30deg);
+        }
+
+        .welcome-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .welcome-section h1 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .welcome-section p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .user-guide {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        .user-guide h3 {
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .create-account-btn {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--dark);
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .create-account-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .divider {
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            margin: 30px 0;
+        }
+
+        .auth-section {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .auth-tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            color: var(--gray);
+        }
+
+        .auth-tab.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .auth-form {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .form-subtitle {
+            color: var(--gray);
+            margin-bottom: 30px;
+        }
+
+        .form-section {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: var(--light);
+            border-radius: var(--border-radius);
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.1);
+        }
+
+        .required::after {
+            content: '*';
+            color: var(--danger);
+            margin-left: 4px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(26, 95, 122, 0.2);
+        }
+
+        .auth-links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .auth-links a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .auth-links a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        /* Notification System */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            max-width: 350px;
+        }
+
+        .notification {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            display: flex;
+            align-items: center;
+            animation: slideInRight 0.3s ease forwards;
+            transform: translateX(100%);
+            opacity: 0;
+        }
+
+        @keyframes slideInRight {
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        .notification.hide {
+            animation: slideOutRight 0.3s ease forwards;
+        }
+
+        .notification-icon {
+            margin-right: 15px;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex-grow: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--gray);
+            margin-left: 10px;
+            flex-shrink: 0;
+        }
+
+        .notification-success {
+            border-left: 4px solid var(--success);
+        }
+
+        .notification-success .notification-icon {
+            color: var(--success);
+        }
+
+        .notification-error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .notification-error .notification-icon {
+            color: var(--danger);
+        }
+
+        .notification-warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        .notification-warning .notification-icon {
+            color: var(--warning);
+        }
+
+        .notification-info {
+            border-left: 4px solid var(--primary);
+        }
+
+        .notification-info .notification-icon {
+            color: var(--primary);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 450px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transform: translateY(-20px);
+            transition: var(--transition);
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .modal-body {
+            margin-bottom: 25px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .modal-btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .modal-btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .modal-btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(26, 95, 122, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(26, 95, 122, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(26, 95, 122, 0);
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .portal-container {
+                flex-direction: column;
+                max-width: 500px;
+            }
+            
+            .welcome-section {
+                order: 2;
+                padding: 30px;
+            }
+            
+            .auth-section {
+                order: 1;
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .auth-tabs {
+                flex-direction: column;
+                border-bottom: none;
+            }
+            
+            .auth-tab {
+                border-bottom: 2px solid #eee;
+            }
+            
+            .auth-tab.active::after {
+                display: none;
+            }
+            
+            .welcome-section h1 {
+                font-size: 1.8rem;
+            }
+            
+            .form-title {
+                font-size: 1.5rem;
+            }
+
+            .auth-links {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+
+            .notification-container {
+                left: 20px;
+                right: 20px;
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Notification Container -->
+    <div class="notification-container" id="notification-container"></div>
+
+    <!-- Modal for Email Input -->
+    <div class="modal-overlay" id="email-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modal-title">Enter Your Email</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="modal-email-input">Email Address</label>
+                    <input type="email" id="modal-email-input" placeholder="your@email.com">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-secondary" id="modal-cancel">Cancel</button>
+                <button class="modal-btn modal-btn-primary" id="modal-submit">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="portal-container">
+        <div class="welcome-section">
+            <div class="welcome-content">
+                <h1>Welcome to HCA Certification Portal</h1>
+                <p>Register, apply, submit, track the progress of application and download your certificate through the HCA certification portal.</p>
+                
+                <div class="user-guide">
+                    <h3>User's guide</h3>
+                    <a href="#" class="create-account-btn">Click Here To Create Account</a>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="login-info">
+                    <h3>Login</h3>
+                    <p>Enter Details to Login</p>
+                    <ul>
+                        <li>E-Mail</li>
+                        <li>Your Password</li>
+                        <li>Keep me login</li>
+                    </ul>
+                </div>
+                
+                <div class="auth-links" style="margin-top: 20px; justify-content: flex-start; gap: 20px;">
+                    <a href="#" id="welcome-forgot-password">Forgot password?</a>
+                    <a href="#" id="welcome-resend-activation">Resend Activation Email?</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="auth-section">
+            <div class="auth-tabs">
+                <div class="auth-tab active" data-tab="login">Login</div>
+                <div class="auth-tab" data-tab="register">Register</div>
+            </div>
+            
+            <!-- Login Form -->
+            <form class="auth-form active" id="login-form">
+                <h2 class="form-title">Login to Your Account</h2>
+                <p class="form-subtitle">Enter your credentials to access the portal</p>
+                
+                <div class="form-group">
+                    <label for="login-email" class="required">E-Mail</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password" class="required">Your Password</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="remember-me">
+                    <label for="remember-me">Keep me logged in</label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" style="margin-top: 20px;">
+                    <i class="fas fa-sign-in-alt"></i> Login
+                </button>
+                
+                <div class="auth-links">
+                    <a href="#" id="login-forgot-password">Forgot password?</a>
+                    <a href="#" id="login-resend-activation">Resend Activation Email?</a>
+                </div>
+            </form>
+            
+            <!-- Registration Form -->
+            <form class="auth-form" id="register-form">
+                <h2 class="form-title">Register your account as Halal Certification Authority Applicant</h2>
+                <p class="form-subtitle">To enjoy our service</p>
+                
+                <div class="form-section">
+                    <h3 class="section-title"><i class="fas fa-building"></i> Company Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="contact-name" class="required">Contact Name</label>
+                        <input type="text" id="contact-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone-number" class="required">Phone Number</label>
+                        <input type="tel" id="phone-number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="company-name" class="required">Company Name</label>
+                        <input type="text" id="company-name" required>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h3 class="section-title"><i class="fas fa-user-lock"></i> Login Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="register-email" class="required">Login Email Address</label>
+                        <input type="email" id="register-email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="register-password" class="required">Password</label>
+                        <input type="password" id="register-password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirm-password" class="required">Confirm Password</label>
+                        <input type="password" id="confirm-password" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-user-plus"></i> Register Account
+                </button>
+                
+                <div class="auth-links">
+                    <a href="#" id="register-login-link">Already have an account? Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // DOM Elements
+        const authTabs = document.querySelectorAll('.auth-tab');
+        const authForms = document.querySelectorAll('.auth-form');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const createAccountBtn = document.querySelector('.create-account-btn');
+        const notificationContainer = document.getElementById('notification-container');
+
+        // Notification system
+        function showNotification(message, type = 'info', title = '') {
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            
+            let icon = 'fa-info-circle';
+            if (type === 'success') icon = 'fa-check-circle';
+            if (type === 'error') icon = 'fa-exclamation-circle';
+            if (type === 'warning') icon = 'fa-exclamation-triangle';
+            
+            notification.innerHTML = `
+                <div class="notification-icon"><i class="fas ${icon}"></i></div>
+                <div class="notification-content">
+                    ${title ? `<div class="notification-title">${title}</div>` : ''}
+                    <div class="notification-message">${message}</div>
+                </div>
+                <button class="notification-close"><i class="fas fa-times"></i></button>
+            `;
+            
+            notificationContainer.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+                notification.style.opacity = '1';
+            }, 10);
+            
+            // Close button event
+            notification.querySelector('.notification-close').addEventListener('click', () => {
+                notification.classList.add('hide');
+                setTimeout(() => {
+                    notificationContainer.removeChild(notification);
+                }, 300);
+            });
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode === notificationContainer) {
+                    notification.classList.add('hide');
+                    setTimeout(() => {
+                        if (notification.parentNode === notificationContainer) {
+                            notificationContainer.removeChild(notification);
+                        }
+                    }, 300);
+                }
+            }, 5000);
+            
+            return notification;
+        }
+
+        // Switch between login and register tabs
+        authTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+
+                authTabs.forEach(t => t.classList.remove('active'));
+                authForms.forEach(f => f.classList.remove('active'));
+
+                tab.classList.add('active');
+                document.getElementById(`${tabId}-form`).classList.add('active');
+            });
+        });
+
+        // Create account button click
+        createAccountBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+
+            authTabs.forEach(t => t.classList.remove('active'));
+            authForms.forEach(f => f.classList.remove('active'));
+
+            document.querySelector('[data-tab="register"]').classList.add('active');
+            document.getElementById('register-form').classList.add('active');
+        });
+
+        // Register to login link
+        document.getElementById('register-login-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            authTabs.forEach(t => t.classList.remove('active'));
+            authForms.forEach(f => f.classList.remove('active'));
+
+            document.querySelector('[data-tab="login"]').classList.add('active');
+            document.getElementById('login-form').classList.add('active');
+        });
+
+        // Forgot password links
+        document.getElementById('login-forgot-password').addEventListener('click', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            handleForgotPassword(email);
+        });
+
+        document.getElementById('welcome-forgot-password').addEventListener('click', (e) => {
+            e.preventDefault();
+            handleForgotPassword();
+        });
+
+        // Resend activation email links
+        document.getElementById('login-resend-activation').addEventListener('click', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            handleResendActivation(email);
+        });
+
+        document.getElementById('welcome-resend-activation').addEventListener('click', (e) => {
+            e.preventDefault();
+            handleResendActivation();
+        });
+
+        // Handle Forgot Password
+        async function handleForgotPassword(prefilledEmail = '') {
+            const email = prefilledEmail || prompt('Please enter your email address for password reset:');
+            
+            if (!email) return;
+            
+            if (!isValidEmail(email)) {
+                showNotification('Please enter a valid email address', 'error', 'Error');
+                return;
+            }
+            
+            try {
+                await window.sendPasswordResetEmail(window.firebaseAuth, email);
+                showNotification('Password reset email sent. Please check your inbox.', 'success', 'Success');
+            } catch (error) {
+                showNotification(`Error sending password reset email: ${error.message}`, 'error', 'Error');
+            }
+        }
+
+        // Handle Resend Activation Email
+        async function handleResendActivation(prefilledEmail = '') {
+            const email = prefilledEmail || prompt('Please enter your email address to resend activation:');
+            
+            if (!email) return;
+            
+            if (!isValidEmail(email)) {
+                showNotification('Please enter a valid email address', 'error', 'Error');
+                return;
+            }
+            
+            try {
+                // To resend activation email, we need to sign in the user first
+                const userCredential = await window.signInWithEmailAndPassword(window.firebaseAuth, email, prompt('Please enter your password to resend activation email:'));
+                const user = userCredential.user;
+                if (user.emailVerified) {
+                    showNotification('Your email is already verified.', 'info', 'Info');
+                } else {
+                    await window.sendEmailVerification(user);
+                    showNotification('Activation email sent. Please check your inbox.', 'success', 'Success');
+                }
+                await window.signOut(window.firebaseAuth);
+            } catch (error) {
+                showNotification(`Error resending activation email: ${error.message}`, 'error', 'Error');
+            }
+        }
+
+        // Email validation
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Login form submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const rememberMe = document.getElementById('remember-me').checked;
+
+            // Show loading state
+            const loginBtn = loginForm.querySelector('button[type="submit"]');
+            const originalText = loginBtn.innerHTML;
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging in...';
+            loginBtn.disabled = true;
+
+            try {
+                const userCredential = await window.signInWithEmailAndPassword(window.firebaseAuth, email, password);
+                const user = userCredential.user;
+                if (!user.emailVerified) {
+                    showNotification('Please verify your email before logging in.', 'warning', 'Email Not Verified');
+                    await window.signOut(window.firebaseAuth);
+                } else {
+                    showNotification('Login successful! Redirecting to dashboard...', 'success', 'Welcome Back');
+                    // Redirect to certificate dashboard
+                    setTimeout(() => {
+                        window.location.href = 'certificate-dashboard.html';
+                    }, 2000);
+                }
+            } catch (error) {
+                showNotification(`Login failed: ${error.message}`, 'error', 'Login Failed');
+            } finally {
+                loginBtn.innerHTML = originalText;
+                loginBtn.disabled = false;
+            }
+        });
+
+        // Register form submission - Fixed Version
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const contactName = document.getElementById('contact-name').value;
+            const phoneNumber = document.getElementById('phone-number').value;
+            const companyName = document.getElementById('company-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            // Validation
+            if (password !== confirmPassword) {
+                showNotification('Passwords do not match', 'error', 'Validation Error');
+                return;
+            }
+
+            if (password.length < 6) {
+                showNotification('Password must be at least 6 characters long.', 'error', 'Validation Error');
+                return;
+            }
+
+            if (!isValidEmail(email)) {
+                showNotification('Please enter a valid email address', 'error', 'Validation Error');
+                return;
+            }
+
+            // Show loading state
+            const registerBtn = registerForm.querySelector('button[type="submit"]');
+            const originalText = registerBtn.innerHTML;
+            registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Registering...';
+            registerBtn.disabled = true;
+
+            try {
+                const userCredential = await window.createUserWithEmailAndPassword(window.firebaseAuth, email, password);
+                const user = userCredential.user;
+                await window.sendEmailVerification(user);
+                showNotification('Account created successfully! Please check your email for verification.', 'success', 'Registration Complete');
+
+                // Switch to login tab
+                authTabs.forEach(t => t.classList.remove('active'));
+                authForms.forEach(f => f.classList.remove('active'));
+
+                document.querySelector('[data-tab="login"]').classList.add('active');
+                document.getElementById('login-form').classList.add('active');
+
+                // Pre-fill the login email
+                document.getElementById('login-email').value = email;
+
+                registerForm.reset();
+            } catch (error) {
+                showNotification(`Registration failed: ${error.message}`, 'error', 'Registration Failed');
+            } finally {
+                registerBtn.innerHTML = originalText;
+                registerBtn.disabled = false;
+            }
+        });
+
+        // Add animations to form elements
+        const formGroups = document.querySelectorAll('.form-group');
+        formGroups.forEach((group, index) => {
+            group.style.opacity = '0';
+            group.style.transform = 'translateY(20px)';
+            group.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+            setTimeout(() => {
+                group.style.opacity = '1';
+                group.style.transform = 'translateY(0)';
+            }, 100 + (index * 100));
+        });
+    </script>
+</body>
+</html>

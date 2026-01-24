@@ -1,0 +1,1706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HCA Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, query, where, orderBy, doc, updateDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA1rBfLt3mQ9oKFTSTYUS149QKZCilUMX8",
+            authDomain: "halal-cret.firebaseapp.com",
+            projectId: "halal-cret",
+            storageBucket: "halal-cret.firebasestorage.app",
+            messagingSenderId: "327578585245",
+            appId: "1:327578585245:web:4872f55784adb4f8b82c74",
+            measurementId: "G-VT3HQCED0Y"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Make Firebase available globally
+        window.firebaseAuth = auth;
+        window.firebaseDB = db;
+        window.signOut = signOut;
+        window.onAuthStateChanged = onAuthStateChanged;
+        window.collection = collection;
+        window.addDoc = addDoc;
+        window.getDocs = getDocs;
+        window.query = query;
+        window.where = where;
+        window.orderBy = orderBy;
+        window.doc = doc;
+        window.updateDoc = updateDoc;
+        window.deleteDoc = deleteDoc;
+        window.onSnapshot = onSnapshot;
+    </script>
+    <style>
+        :root {
+            --primary: #1a5f7a;
+            --primary-dark: #124c63;
+            --secondary: #159895;
+            --accent: #ffc107;
+            --light: #f8f9fa;
+            --dark: #2d3e50;
+            --success: #28a745;
+            --danger: #dc3545;
+            --warning: #ff9800;
+            --gray: #6c757d;
+            --white: #ffffff;
+            --card-bg: #ffffff;
+            --border-radius: 8px;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        /* Login Styles */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #e6f7ff 0%, #f0f9eb 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-logo {
+            margin-bottom: 30px;
+        }
+
+        .login-logo img {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 15px;
+        }
+
+        .login-logo h2 {
+            color: var(--primary);
+            margin: 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .login-form .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .login-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .login-form input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.1);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 20px;
+        }
+
+        .login-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .login-links {
+            text-align: center;
+        }
+
+        .login-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .login-links a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e6f7ff 0%, #f0f9eb 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            font-size: 16px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        .admin-container {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .admin-container:hover {
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .admin-header {
+            background: var(--white);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h1 {
+            color: var(--primary);
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .logout-btn {
+            background: var(--danger);
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .logout-btn:hover {
+            background: #c82333;
+        }
+
+        .admin-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .admin-tab {
+            padding: 15px 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            color: var(--gray);
+        }
+
+        .admin-tab.active {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .admin-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+
+        .admin-content {
+            display: none;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .admin-content.active {
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            text-align: center;
+            border-left: 4px solid var(--primary);
+        }
+
+        .stat-card.pending {
+            border-left-color: var(--warning);
+        }
+
+        .stat-card.approved {
+            border-left-color: var(--success);
+        }
+
+        .stat-card.rejected {
+            border-left-color: var(--danger);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .application-card {
+            background: var(--white);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+            transition: var(--transition);
+        }
+
+        .application-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .application-card.pending {
+            border-left-color: var(--warning);
+        }
+
+        .application-card.approved {
+            border-left-color: var(--success);
+        }
+
+        .application-card.rejected {
+            border-left-color: var(--danger);
+        }
+
+        .application-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .application-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .application-status {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .application-details {
+            margin-bottom: 15px;
+        }
+
+        .application-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .application-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .close {
+            color: var(--gray);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: var(--dark);
+        }
+
+        .application-details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .detail-section {
+            background: var(--light);
+            padding: 15px;
+            border-radius: var(--border-radius);
+        }
+
+        .detail-section h4 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .detail-item {
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .detail-value {
+            color: var(--gray);
+        }
+
+        .certificate-form {
+            background: var(--white);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(26, 95, 122, 0.1);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .btn-large {
+            padding: 14px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 8px;
+            padding: 15px 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+            max-width: 350px;
+            transform: translateX(100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .notification-success {
+            border-left: 4px solid var(--success);
+        }
+
+        .notification-error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .notification-info {
+            border-left: 4px solid var(--primary);
+        }
+
+        .notification-warning {
+            border-left: 4px solid var(--warning);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .admin-tabs {
+                flex-direction: column;
+                border-bottom: none;
+            }
+
+            .admin-tab {
+                border-bottom: 2px solid #eee;
+            }
+
+            .admin-tab.active::after {
+                display: none;
+            }
+
+            .applications-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .application-details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <div class="admin-header">
+            <h1>HCA Admin Dashboard</h1>
+            <div class="user-info">
+                <div class="user-avatar">AD</div>
+                <span>Admin</span>
+                <button class="logout-btn">Logout</button>
+            </div>
+        </div>
+
+        <div class="admin-tabs">
+            <div class="admin-tab active" data-tab="overview">Overview</div>
+            <div class="admin-tab" data-tab="applications">All Applications</div>
+            <div class="admin-tab" data-tab="certificates">Certificates</div>
+            <div class="admin-tab" data-tab="reports">Reports</div>
+        </div>
+
+        <!-- Overview Tab -->
+        <div class="admin-content active" id="overview-content">
+            <div class="stats-grid">
+                <div class="stat-card pending">
+                    <div class="stat-number" id="pending-count">0</div>
+                    <div class="stat-label">Pending Applications</div>
+                </div>
+                <div class="stat-card approved">
+                    <div class="stat-number" id="approved-count">0</div>
+                    <div class="stat-label">Approved Applications</div>
+                </div>
+                <div class="stat-card rejected">
+                    <div class="stat-number" id="rejected-count">0</div>
+                    <div class="stat-label">Rejected Applications</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="total-count">0</div>
+                    <div class="stat-label">Total Applications</div>
+                </div>
+            </div>
+
+            <h2>Recent Applications</h2>
+            <div class="applications-grid" id="recent-applications">
+                <!-- Recent applications will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Applications Tab -->
+        <div class="admin-content" id="applications-content">
+            <h2>All Applications</h2>
+            <div class="applications-grid" id="all-applications">
+                <!-- All applications will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Certificates Tab -->
+        <div class="admin-content" id="certificates-content">
+            <h2>All Certificates</h2>
+            <div class="applications-grid" id="all-certificates">
+                <!-- All certificates will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Reports Tab -->
+        <div class="admin-content" id="reports-content">
+            <h2>Reports</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="monthly-count">0</div>
+                    <div class="stat-label">This Month</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="weekly-count">0</div>
+                    <div class="stat-label">This Week</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="today-count">0</div>
+                    <div class="stat-label">Today</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="certificates-issued">0</div>
+                    <div class="stat-label">Certificates Issued</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Overlay -->
+    <div id="loginOverlay" class="login-overlay" style="display: none;">
+        <div class="login-container">
+            <div class="login-logo">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lWR0aD0iNDAiIGhlaWdodD0iNDAiIHJ4PSI4IiBmaWxsPSIjMDA3QTU1Ii8+CjxwYXRoIGQ9Ik0xMiAxMkgyOFYyOEgxMlYyOFoiIGZpbGw9IndoaXRlIi8+Cjwvc3ZnPgo=" alt="HCA Logo">
+                <h2>Admin Login</h2>
+            </div>
+            <form class="login-form" id="adminLoginForm">
+                <div class="form-group">
+                    <label for="adminEmail">Email Address</label>
+                    <input type="email" id="adminEmail" name="adminEmail" required placeholder="admin@hca.com">
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Password</label>
+                    <input type="password" id="adminPassword" name="adminPassword" required placeholder="Enter your password">
+                </div>
+                <button type="submit" class="login-btn">Login to Dashboard</button>
+                <div class="error-message" id="loginError"></div>
+            </form>
+            <div class="login-links">
+                <a href="index.html">Back to Main Portal</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Details Modal -->
+    <div id="applicationModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Application Details</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div id="application-details-content">
+                <!-- Application details will be loaded here -->
+            </div>
+            <div class="form-actions">
+                <button class="btn btn-success btn-large" onclick="approveApplication()">Approve & Issue Certificate</button>
+                <button class="btn btn-danger btn-large" onclick="rejectApplication()">Reject Application</button>
+                <button class="btn btn-secondary btn-large" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Certificate Creation Modal -->
+    <div id="certificateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Create Certificate</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="certificate-form">
+                <div class="form-group">
+                    <label for="cert-company-name">Company Name</label>
+                    <input type="text" id="cert-company-name" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="cert-application-id">Application ID</label>
+                    <input type="text" id="cert-application-id" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="cert-issue-date">Issue Date</label>
+                    <input type="date" id="cert-issue-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="cert-expiry-date">Expiry Date</label>
+                    <input type="date" id="cert-expiry-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="cert-certificate-number">Certificate Number</label>
+                    <input type="text" id="cert-certificate-number" placeholder="Auto-generated" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="cert-notes">Additional Notes</label>
+                    <textarea id="cert-notes" rows="3" placeholder="Optional notes about the certificate"></textarea>
+                </div>
+                <div class="form-actions">
+                    <button class="btn btn-primary btn-large" onclick="createCertificate()">Create Certificate</button>
+                    <button class="btn btn-secondary btn-large" onclick="closeCertificateModal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentUser = null;
+        let applicationsData = [];
+        let certificatesData = [];
+        let currentApplicationId = null;
+
+        // Tab switching functionality
+        const adminTabs = document.querySelectorAll('.admin-tab');
+        const adminContents = document.querySelectorAll('.admin-content');
+
+        window.switchTab = function(tabId) {
+            adminTabs.forEach(tab => tab.classList.remove('active'));
+            adminContents.forEach(content => content.classList.remove('active'));
+
+            const tabToActivate = document.querySelector(`[data-tab="${tabId}"]`);
+            const contentToActivate = document.getElementById(`${tabId}-content`);
+            if (tabToActivate && contentToActivate) {
+                tabToActivate.classList.add('active');
+                contentToActivate.classList.add('active');
+
+                // Load data when switching to specific tabs
+                if (tabId === 'applications') {
+                    loadAllApplications();
+                } else if (tabId === 'certificates') {
+                    loadAllCertificates();
+                } else if (tabId === 'reports') {
+                    loadReports();
+                }
+            } else {
+                // Fallback: activate first tab and content if invalid tabId
+                if (adminTabs.length > 0) adminTabs[0].classList.add('active');
+                if (adminContents.length > 0) adminContents[0].classList.add('active');
+            }
+        }
+
+        adminTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                switchTab(tabId);
+            });
+        });
+
+        // Authentication state management
+        window.onAuthStateChanged(window.firebaseAuth, (user) => {
+            if (!user) {
+                // User is not authenticated, show login overlay
+                showLoginOverlay();
+            } else {
+                // User is authenticated
+                currentUser = user;
+                hideLoginOverlay();
+                updateUserInfo(user);
+                loadDashboardData();
+            }
+        });
+
+        // Show login overlay
+        function showLoginOverlay() {
+            const overlay = document.getElementById('loginOverlay');
+            if (overlay) {
+                overlay.style.display = 'flex';
+            }
+        }
+
+        // Hide login overlay
+        function hideLoginOverlay() {
+            const overlay = document.getElementById('loginOverlay');
+            if (overlay) {
+                overlay.style.display = 'none';
+            }
+        }
+
+        // Handle admin login form submission
+        document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPassword').value;
+            const errorElement = document.getElementById('loginError');
+
+            // Clear previous error
+            errorElement.style.display = 'none';
+            errorElement.textContent = '';
+
+            try {
+                // Use Firebase Authentication
+                await signInWithEmailAndPassword(window.firebaseAuth, email, password);
+                showNotification('Login successful! Welcome to the Admin Dashboard.', 'success');
+                hideLoginOverlay();
+            } catch (error) {
+                console.error('Login error:', error);
+                let errorMessage = 'Login failed. Please try again.';
+
+                // Handle specific Firebase auth errors
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                        errorMessage = 'No account found with this email address.';
+                        break;
+                    case 'auth/wrong-password':
+                        errorMessage = 'Incorrect password. Please try again.';
+                        break;
+                    case 'auth/invalid-email':
+                        errorMessage = 'Please enter a valid email address.';
+                        break;
+                    case 'auth/user-disabled':
+                        errorMessage = 'This account has been disabled.';
+                        break;
+                    case 'auth/too-many-requests':
+                        errorMessage = 'Too many failed login attempts. Please try again later.';
+                        break;
+                    default:
+                        errorMessage = error.message || 'Login failed. Please try again.';
+                }
+
+                errorElement.textContent = errorMessage;
+                errorElement.style.display = 'block';
+            }
+        });
+
+        // Update user information in the UI
+        function updateUserInfo(user) {
+            const userNameElement = document.querySelector('.user-info span');
+            const userAvatarElement = document.querySelector('.user-avatar');
+
+            if (userNameElement) {
+                if (user.displayName) {
+                    userNameElement.textContent = user.displayName;
+                } else if (user.email) {
+                    userNameElement.textContent = user.email.split('@')[0];
+                }
+            }
+
+            if (userAvatarElement) {
+                if (user.displayName) {
+                    userAvatarElement.textContent = user.displayName.charAt(0).toUpperCase();
+                } else if (user.email) {
+                    userAvatarElement.textContent = user.email.charAt(0).toUpperCase();
+                }
+            }
+        }
+
+        // Load dashboard data
+        async function loadDashboardData() {
+            if (!currentUser) return;
+
+            try {
+                await loadStats();
+                await loadRecentApplications();
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                showNotification('Error loading dashboard data', 'error');
+            }
+        }
+
+        // Load statistics
+        async function loadStats() {
+            try {
+                const applicationsRef = window.collection(window.firebaseDB, 'applications');
+                const querySnapshot = await window.getDocs(applicationsRef);
+
+                let pending = 0, approved = 0, rejected = 0, total = 0;
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    total++;
+                    switch (data.status) {
+                        case 'pending': pending++; break;
+                        case 'approved': approved++; break;
+                        case 'rejected': rejected++; break;
+                    }
+                });
+
+                document.getElementById('pending-count').textContent = pending;
+                document.getElementById('approved-count').textContent = approved;
+                document.getElementById('rejected-count').textContent = rejected;
+                document.getElementById('total-count').textContent = total;
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // Load recent applications
+        async function loadRecentApplications() {
+            try {
+                const applicationsRef = window.collection(window.firebaseDB, 'applications');
+                const q = window.query(applicationsRef, window.orderBy('createdAt', 'desc'));
+                const querySnapshot = await window.getDocs(q);
+
+                const recentApplications = [];
+                querySnapshot.forEach((doc) => {
+                    recentApplications.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+
+                renderApplications(recentApplications.slice(0, 6), 'recent-applications');
+            } catch (error) {
+                console.error('Error loading recent applications:', error);
+            }
+        }
+
+        // Load all applications
+        async function loadAllApplications() {
+            try {
+                const applicationsRef = window.collection(window.firebaseDB, 'applications');
+                const q = window.query(applicationsRef, window.orderBy('createdAt', 'desc'));
+                const querySnapshot = await window.getDocs(q);
+
+                applicationsData = [];
+                querySnapshot.forEach((doc) => {
+                    applicationsData.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+
+                renderApplications(applicationsData, 'all-applications');
+            } catch (error) {
+                console.error('Error loading applications:', error);
+                showNotification('Error loading applications', 'error');
+            }
+        }
+
+        // Load all certificates
+        async function loadAllCertificates() {
+            try {
+                const certificatesRef = window.collection(window.firebaseDB, 'certificates');
+                const q = window.query(certificatesRef, window.orderBy('issuedAt', 'desc'));
+                const querySnapshot = await window.getDocs(q);
+
+                certificatesData = [];
+                querySnapshot.forEach((doc) => {
+                    certificatesData.push({
+                        id: doc.id,
+                        ...doc.data()
+                    });
+                });
+
+                renderCertificates(certificatesData, 'all-certificates');
+            } catch (error) {
+                console.error('Error loading certificates:', error);
+                showNotification('Error loading certificates', 'error');
+            }
+        }
+
+        // Load reports
+        async function loadReports() {
+            try {
+                const now = new Date();
+                const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+                const weekStart = new Date(now);
+                weekStart.setDate(now.getDate() - now.getDay());
+                const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+
+                const applicationsRef = window.collection(window.firebaseDB, 'applications');
+                const querySnapshot = await window.getDocs(applicationsRef);
+
+                let monthly = 0, weekly = 0, today = 0, certificates = 0;
+
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const createdAt = data.createdAt ? data.createdAt.toDate() : new Date();
+
+                    if (createdAt >= monthStart) monthly++;
+                    if (createdAt >= weekStart) weekly++;
+                    if (createdAt >= todayStart) today++;
+                    if (data.status === 'approved') certificates++;
+                });
+
+                document.getElementById('monthly-count').textContent = monthly;
+                document.getElementById('weekly-count').textContent = weekly;
+                document.getElementById('today-count').textContent = today;
+                document.getElementById('certificates-issued').textContent = certificates;
+            } catch (error) {
+                console.error('Error loading reports:', error);
+            }
+        }
+
+        // Render applications
+        function renderApplications(applications, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            if (applications.length === 0) {
+                container.innerHTML = `
+                    <div class="application-card">
+                        <div class="application-header">
+                            <div class="application-title">No Applications Found</div>
+                        </div>
+                        <div class="application-details">
+                            <p>No applications have been submitted yet.</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = applications.map(app => {
+                const statusClass = getStatusClass(app.status);
+                const statusText = getStatusText(app.status);
+                const submittedDate = app.createdAt ? new Date(app.createdAt.toDate()).toLocaleDateString() : 'N/A';
+                const productsCount = app.productsList ? app.productsList.split('\n').length : 0;
+
+                return `
+                    <div class="application-card ${statusClass}">
+                        <div class="application-header">
+                            <div class="application-title">${app.companyName || 'Untitled Application'}</div>
+                            <div class="application-status status-${statusClass}">${statusText}</div>
+                        </div>
+                        <div class="application-details">
+                            <div class="application-detail">
+                                <span>Application ID:</span>
+                                <span>${app.id.substring(0, 12)}...</span>
+                            </div>
+                            <div class="application-detail">
+                                <span>Submitted:</span>
+                                <span>${submittedDate}</span>
+                            </div>
+                            <div class="application-detail">
+                                <span>Products:</span>
+                                <span>${productsCount} Products</span>
+                            </div>
+                            <div class="application-detail">
+                                <span>User:</span>
+                                <span>${app.userEmail || 'N/A'}</span>
+                            </div>
+                        </div>
+                        <div class="application-actions">
+                            <button class="btn btn-primary" onclick="viewApplication('${app.id}')">View Details</button>
+                            ${app.status === 'pending' ? `
+                                <button class="btn btn-success" onclick="showCertificateModal('${app.id}')">Approve</button>
+                                <button class="btn btn-danger" onclick="rejectApplication('${app.id}')">Reject</button>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render certificates
+        function renderCertificates(certificates, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            if (certificates.length === 0) {
+                container.innerHTML = `
+                    <div class="application-card">
+                        <div class="application-header">
+                            <div class="application-title">No Certificates Found</div>
+                        </div>
+                        <div class="application-details">
+                            <p>No certificates have been issued yet.</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = certificates.map(cert => {
+                const issuedDate = cert.issuedAt ? new Date(cert.issuedAt.toDate()).toLocaleDateString() : 'N/A';
+                const expiryDate = cert.expiryDate ? new Date(cert.expiryDate.toDate()).toLocaleDateString() : 'N/A';
+
+                return `
+                    <div class="application-card approved">
+                        <div class="application-header">
+                            <div class="application-title">${cert.companyName || 'Certificate'}</div>
+                            <div class="application-status status-approved">Certificate Issued</div>
+                        </div>
+                        <div class="application-details">
+                            <div class="application-detail">
+                                <span>Certificate ID:</span>
+                                <span>${cert.id.substring(0, 12)}...</span>
+                            </div>
+                            <div class="application-detail">
+                                <span>Application ID:</span>
+                                <span>${cert.applicationId ? cert.applicationId.substring(0, 12) + '...' : 'N/A'}</span>
+                            </div>
+                            <div class="application-detail">
+                                <span>Issued:</span>
+                                <span>${issuedDate}</span>
+                            </div>
+                            <div class="application-detail">
+                                <span>Expires:</span>
+                                <span>${expiryDate}</span>
+                            </div>
+                        </div>
+                        <div class="application-actions">
+                            <button class="btn btn-primary" onclick="viewCertificate('${cert.id}')">View Certificate</button>
+                            <button class="btn btn-secondary" onclick="downloadCertificate('${cert.id}')">Download</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Utility functions
+        function getStatusClass(status) {
+            switch (status) {
+                case 'approved': return 'approved';
+                case 'rejected': return 'rejected';
+                case 'pending':
+                default: return 'pending';
+            }
+        }
+
+        function getStatusText(status) {
+            switch (status) {
+                case 'approved': return 'Approved';
+                case 'rejected': return 'Rejected';
+                case 'pending':
+                default: return 'Pending';
+            }
+        }
+
+        // Modal functions
+        window.viewApplication = async function(applicationId) {
+            try {
+                const application = applicationsData.find(app => app.id === applicationId);
+                if (!application) {
+                    showNotification('Application not found', 'error');
+                    return;
+                }
+
+                currentApplicationId = applicationId;
+                const modal = document.getElementById('applicationModal');
+                const content = document.getElementById('application-details-content');
+
+                content.innerHTML = `
+                    <div class="application-details-grid">
+                        <div class="detail-section">
+                            <h4>Company Information</h4>
+                            <div class="detail-item">
+                                <span class="detail-label">Company Name:</span>
+                                <span class="detail-value">${application.companyName || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Registration Number:</span>
+                                <span class="detail-value">${application.companyRegistration || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Address:</span>
+                                <span class="detail-value">${application.companyAddress || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">City:</span>
+                                <span class="detail-value">${application.companyCity || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">State:</span>
+                                <span class="detail-value">${application.companyState || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Country:</span>
+                                <span class="detail-value">${application.companyCountry || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Website:</span>
+                                <span class="detail-value">${application.companyWebsite || 'N/A'}</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <h4>Contact Information</h4>
+                            <div class="detail-item">
+                                <span class="detail-label">Primary Contact:</span>
+                                <span class="detail-value">${application.primaryContact || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Position:</span>
+                                <span class="detail-value">${application.contactPosition || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Email:</span>
+                                <span class="detail-value">${application.contactEmail || 'N/A'}</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <h4>Manufacturing Facility</h4>
+                            <div class="detail-item">
+                                <span class="detail-label">Plant Name:</span>
+                                <span class="detail-value">${application.plantName || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Plant Address:</span>
+                                <span class="detail-value">${application.plantAddress || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Plant Contact:</span>
+                                <span class="detail-value">${application.plantContact || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Plant Phone:</span>
+                                <span class="detail-value">${application.plantPhone || 'N/A'}</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <h4>Product Information</h4>
+                            <div class="detail-item">
+                                <span class="detail-label">Previous Application:</span>
+                                <span class="detail-value">${application.previousApplication || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Previous Supervision:</span>
+                                <span class="detail-value">${application.previousSupervision || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Products List:</span>
+                                <span class="detail-value">${application.productsList ? application.productsList.replace(/\n/g, '<br>') : 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Food Safety Programs:</span>
+                                <span class="detail-value">${formatFoodSafetyPrograms(application.foodSafetyPrograms)}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Pork Products:</span>
+                                <span class="detail-value">${application.porkProducts || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Gelatin Use:</span>
+                                <span class="detail-value">${application.gelatinUse || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Alcohol Content:</span>
+                                <span class="detail-value">${application.alcoholContent || 'N/A'}</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <h4>Compliance Statement</h4>
+                            <div class="detail-item">
+                                <span class="detail-label">Signatory Name:</span>
+                                <span class="detail-value">${application.signatoryName || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Signatory Position:</span>
+                                <span class="detail-value">${application.signatoryPosition || 'N/A'}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Application Status:</span>
+                                <span class="detail-value">${getStatusText(application.status)}</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Submitted Date:</span>
+                                <span class="detail-value">${application.createdAt ? new Date(application.createdAt.toDate()).toLocaleDateString() : 'N/A'}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                modal.style.display = 'block';
+            } catch (error) {
+                console.error('Error viewing application:', error);
+                showNotification('Error loading application details', 'error');
+            }
+        };
+
+        function formatFoodSafetyPrograms(programs) {
+            if (!programs) return 'None specified';
+            const programsList = [];
+            if (programs.haccp) programsList.push('HACCP');
+            if (programs.iso22000) programsList.push('ISO-22000');
+            if (programs.gmp) programsList.push('GMP');
+            if (programs.qms) programsList.push('QMS');
+            return programsList.length > 0 ? programsList.join(', ') : 'None specified';
+        }
+
+        window.showCertificateModal = function(applicationId) {
+            const application = applicationsData.find(app => app.id === applicationId);
+            if (!application) {
+                showNotification('Application not found', 'error');
+                return;
+            }
+
+            currentApplicationId = applicationId;
+
+            // Pre-fill certificate form
+            document.getElementById('cert-company-name').value = application.companyName || '';
+            document.getElementById('cert-application-id').value = applicationId;
+
+            // Set default dates
+            const today = new Date();
+            const nextYear = new Date(today);
+            nextYear.setFullYear(today.getFullYear() + 1);
+
+            document.getElementById('cert-issue-date').value = today.toISOString().split('T')[0];
+            document.getElementById('cert-expiry-date').value = nextYear.toISOString().split('T')[0];
+
+            // Generate certificate number
+            const certNumber = 'HCA-' + Date.now().toString().slice(-8);
+            document.getElementById('cert-certificate-number').value = certNumber;
+
+            document.getElementById('certificateModal').style.display = 'block';
+        };
+
+        window.createCertificate = async function() {
+            if (!currentApplicationId) {
+                showNotification('No application selected', 'error');
+                return;
+            }
+
+            const application = applicationsData.find(app => app.id === currentApplicationId);
+            if (!application) {
+                showNotification('Application not found', 'error');
+                return;
+            }
+
+            // Collect certificate data
+            const certificateData = {
+                applicationId: currentApplicationId,
+                userId: application.userId,
+                userEmail: application.userEmail,
+                companyName: document.getElementById('cert-company-name').value,
+                companyRegistration: application.companyRegistration,
+                companyAddress: application.companyAddress,
+                companyCity: application.companyCity,
+                companyState: application.companyState,
+                companyCountry: application.companyCountry,
+                primaryContact: application.primaryContact,
+                contactPosition: application.contactPosition,
+                contactEmail: application.contactEmail,
+                plantName: application.plantName,
+                plantAddress: application.plantAddress,
+                plantContact: application.plantContact,
+                plantPhone: application.plantPhone,
+                productsList: application.productsList,
+                foodSafetyPrograms: application.foodSafetyPrograms,
+                certificateNumber: document.getElementById('cert-certificate-number').value,
+                issuedAt: new Date(document.getElementById('cert-issue-date').value),
+                expiryDate: new Date(document.getElementById('cert-expiry-date').value),
+                notes: document.getElementById('cert-notes').value,
+                status: 'active',
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
+
+            try {
+                // Create certificate
+                const docRef = await window.addDoc(window.collection(window.firebaseDB, 'certificates'), certificateData);
+
+                // Update application status
+                const applicationRef = window.doc(window.firebaseDB, 'applications', currentApplicationId);
+                await window.updateDoc(applicationRef, {
+                    status: 'approved',
+                    certificateId: docRef.id,
+                    updatedAt: new Date()
+                });
+
+                showNotification('Certificate created successfully!', 'success');
+                closeCertificateModal();
+                closeModal();
+
+                // Refresh data
+                await loadStats();
+                await loadAllApplications();
+                await loadAllCertificates();
+
+            } catch (error) {
+                console.error('Error creating certificate:', error);
+                showNotification('Error creating certificate. Please try again.', 'error');
+            }
+        };
+
+        window.rejectApplication = async function(applicationId = null) {
+            const id = applicationId || currentApplicationId;
+            if (!id) {
+                showNotification('No application selected', 'error');
+                return;
+            }
+
+            if (!confirm('Are you sure you want to reject this application?')) {
+                return;
+            }
+
+            try {
+                const applicationRef = window.doc(window.firebaseDB, 'applications', id);
+                await window.updateDoc(applicationRef, {
+                    status: 'rejected',
+                    updatedAt: new Date()
+                });
+
+                showNotification('Application rejected successfully', 'success');
+                closeModal();
+
+                // Refresh data
+                await loadStats();
+                await loadAllApplications();
+
+            } catch (error) {
+                console.error('Error rejecting application:', error);
+                showNotification('Error rejecting application. Please try again.', 'error');
+            }
+        };
+
+        window.approveApplication = function() {
+            showCertificateModal(currentApplicationId);
+        };
+
+        window.viewCertificate = function(certificateId) {
+            // Find the certificate
+            const certificate = certificatesData.find(cert => cert.id === certificateId);
+            if (!certificate) {
+                showNotification('Certificate not found', 'error');
+                return;
+            }
+
+            // Show certificate details
+            const details = `Certificate ID: ${certificate.certificateNumber || certificate.id}
+Company: ${certificate.companyName}
+Application ID: ${certificate.applicationId}
+Issued: ${certificate.issuedAt ? new Date(certificate.issuedAt.toDate()).toLocaleDateString() : 'N/A'}
+Expires: ${certificate.expiryDate ? new Date(certificate.expiryDate.toDate()).toLocaleDateString() : 'N/A'}
+            `;
+            alert(details);
+        };
+
+        window.downloadCertificate = function(certificateId) {
+            // In a real implementation, this would download the certificate PDF
+            showNotification('Certificate download functionality will be implemented soon', 'info');
+        };
+
+        // Modal close functions
+        window.closeModal = function() {
+            document.getElementById('applicationModal').style.display = 'none';
+            currentApplicationId = null;
+        };
+
+        window.closeCertificateModal = function() {
+            document.getElementById('certificateModal').style.display = 'none';
+        };
+
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            const applicationModal = document.getElementById('applicationModal');
+            const certificateModal = document.getElementById('certificateModal');
+
+            if (event.target === applicationModal) {
+                closeModal();
+            }
+            if (event.target === certificateModal) {
+                closeCertificateModal();
+            }
+        };
+
+        // Close modal when clicking the close button
+        document.querySelectorAll('.close').forEach(closeBtn => {
+            closeBtn.addEventListener('click', function() {
+                const modal = this.closest('.modal');
+                if (modal.id === 'applicationModal') {
+                    closeModal();
+                } else if (modal.id === 'certificateModal') {
+                    closeCertificateModal();
+                }
+            });
+        });
+
+        // Notification system
+        function showNotification(message, type = 'info', title = '') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `notification notification-${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: white;
+                border-radius: 8px;
+                padding: 15px 20px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+                z-index: 9999;
+                max-width: 350px;
+                transform: translateX(100%);
+                opacity: 0;
+                transition: all 0.3s ease;
+            `;
+
+            let icon = 'fa-info-circle';
+            if (type === 'success') icon = 'fa-check-circle';
+            if (type === 'error') icon = 'fa-exclamation-circle';
+            if (type === 'warning') icon = 'fa-exclamation-triangle';
+
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center;">
+                    <div style="margin-right: 15px; font-size: 1.5rem;">
+                        <i class="fas ${icon}" style="color: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : type === 'warning' ? '#ffc107' : '#17a2b8'}"></i>
+                    </div>
+                    <div style="flex-grow: 1;">
+                        ${title ? `<div style="font-weight: 600; margin-bottom: 5px;">${title}</div>` : ''}
+                        <div>${message}</div>
+                    </div>
+                    <button style="background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #6c757d; margin-left: 10px;" onclick="this.parentElement.parentElement.remove()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+
+            document.body.appendChild(notification);
+
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+                notification.style.opacity = '1';
+            }, 10);
+
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.style.transform = 'translateX(100%)';
+                    notification.style.opacity = '0';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            notification.parentNode.removeChild(notification);
+                        }
+                    }, 300);
+                }
+            }, 5000);
+        }
+
+        // Logout functionality
+        document.querySelector('.logout-btn').addEventListener('click', async () => {
+            if (confirm('Are you sure you want to logout?')) {
+                try {
+                    await window.signOut(window.firebaseAuth);
+                    window.location.href = 'index.html';
+                } catch (error) {
+                    console.error('Error signing out:', error);
+                    // Fallback: redirect anyway
+                    window.location.href = 'index.html';
+                }
+            }
+        });
+
+        // Initialize dashboard on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default dates for certificate modal
+            const today = new Date();
+            const nextYear = new Date(today);
+            nextYear.setFullYear(today.getFullYear() + 1);
+
+            const issueDateInput = document.getElementById('cert-issue-date');
+            const expiryDateInput = document.getElementById('cert-expiry-date');
+
+            if (issueDateInput) {
+                issueDateInput.value = today.toISOString().split('T')[0];
+            }
+            if (expiryDateInput) {
+                expiryDateInput.value = nextYear.toISOString().split('T')[0];
+            }
+        });
+    </script>
+</body>
+</html>
