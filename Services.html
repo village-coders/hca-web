@@ -822,7 +822,8 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="aboutus.html">About</a></li>
                     <li><a href="Services.html" class="active">Services</a></li>
-                    <li><a href="Services.html#process">Online Certification Portal</a></li>
+                    <li><a target="_blank" href="https://halal-certification-authority.vercel.app">Online Certification Portal</a></li>
+                    <li><a target="_blank" href="https://halal-certification-authority.vercel.app">Login/Register</a></li>
                     <li><a href="news.html">News</a></li>
                     <li><a href="conatct.html">Contact</a></li>
                 </ul>
@@ -1207,7 +1208,7 @@
             <h2>Ready to Get Certified?</h2>
             <p>Join thousands of businesses that trust HCA Nigeria for authentic Halal certification. Our team is ready to guide you through the certification process and help you access new markets.</p>
             <div class="cta-buttons">
-                <a href="certification.html" class="btn">Start Certification</a>
+                <a target="_blank" href="https://halal-certification-authority.vercel.app" class="btn">Start Certification</a>
                 <a href="contact.html" class="btn btn-accent">Contact Our Team</a>
             </div>
         </div>
@@ -1223,7 +1224,7 @@
                     </div>
                     <div class="footer-about">
                         <p>The Halal Certification Authority Nigeria is the leading body for Halal certification in Nigeria, ensuring products and services comply with Islamic Shariah law.</p>
-                        <a href="certification.html" class="btn">Get Certified</a>
+                        <a target="_blank" href="https://halal-certification-authority.vercel.appl" class="btn">Get Certified</a>
                     </div>
                 </div>
                 
@@ -1233,7 +1234,7 @@
                         <li><a href="index.html">Home</a></li>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="services.html">Services</a></li>
-                        <li><a href="certification.html">Certification Process</a></li>
+                        <li><a target="_blank" href="https://halal-certification-authority.vercel.app">Login/Register</a></li>
                         <li><a href="news.html">News & Updates</a></li>
                         <li><a href="contact.html">Contact Us</a></li>
                     </ul>
@@ -1255,12 +1256,17 @@
             </div>
             
             <div class="copyright">
-                <p>&copy; 2023 Halal Certification Authority Nigeria. All rights reserved. | <a href="#" style="color: #d4af37;">Privacy Policy</a> | <a href="#" style="color: #d4af37;">Terms of Use</a></p>
+                <p>&copy; <span id="date"></span> Halal Certification Authority Nigeria. All rights reserved. | <a href="#" style="color: #d4af37;">Privacy Policy</a> | <a href="#" style="color: #d4af37;">Terms of Use</a></p> <br>
+                Design and Development by <a target="_blank" style="color: #d4af37;"href="https://theyoungpioneers.com/">Theyoungpioneers</a></p>
             </div>
         </div>
     </footer>
 
     <script>
+        const dateSpan = document.getElementById('date');
+        const currentYear = new Date().getFullYear();
+        dateSpan.textContent = currentYear;
+        
         // Mobile Navigation Toggle
         const mobileToggle = document.getElementById('mobileToggle');
         const navMenu = document.getElementById('navMenu');

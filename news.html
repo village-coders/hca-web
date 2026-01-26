@@ -562,7 +562,8 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="aboutus.html">About</a></li>
                     <li><a href="Services.html">Services</a></li>
-                    <li><a href="Services.html#process">Online Certification Portal</a></li>
+                    <li><a target="_blank" href="https://halal-certification-authority.vercel.app">Online Certification Portal</a></li>
+                    <li><a target="_blank" href="https://halal-certification-authority.vercel.app">Login/Register</a></li>
                     <li><a href="news.html" class="active">News</a></li>
                     <li><a href="conatct.html">Contact</a></li>
                 </ul>
@@ -829,7 +830,7 @@
                         <li><a href="index.html">Home</a></li>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="services.html">Services</a></li>
-                        <li><a href="certification.html">Certification Process</a></li>
+                        <li><a target="_blank" href="https://halal-certification-authority.vercel.app">Login/Register</a></li>
                         <li><a href="news.html">News & Updates</a></li>
                         <li><a href="contact.html">Contact Us</a></li>
                     </ul>
@@ -851,7 +852,9 @@
             </div>
             
             <div class="copyright">
-                <p>&copy; 2023 Halal Certification Authority Nigeria. All rights reserved. | <a href="#" style="color: #d4af37;">Privacy Policy</a> | <a href="#" style="color: #d4af37;">Terms of Use</a></p>
+                <p>&copy; <span id="date"></span> Halal Certification Authority Nigeria. All rights reserved. | <a href="#" style="color: #d4af37;">Privacy Policy</a> | <a href="#" style="color: #d4af37;">Terms of Use</a></p>
+                <br>
+                Design and Development by <a target="_blank" style="color: #d4af37;"href="https://theyoungpioneers.com/">Theyoungpioneers</a></p>
             </div>
         </div>
     </footer>
@@ -1090,6 +1093,9 @@
                 }
             }
         });
+        const dateSpan = document.getElementById('date');
+        const currentYear = new Date().getFullYear();
+        dateSpan.textContent = currentYear;
     </script>
 </body>
 </html>
