@@ -12,6 +12,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
         }
 
         :root {
@@ -22,6 +23,8 @@
             --dark-color: #333;
             --gray-color: #6c757d;
             --transition: all 0.3s ease;
+            --modal-z-index: 2000;
+            --modal-backdrop: rgba(0, 0, 0, 0.85);
         }
 
         body {
@@ -767,6 +770,7 @@
             overflow: hidden;
             transition: var(--transition);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
         }
 
         .team-member:hover {
@@ -816,6 +820,320 @@
             color: var(--gray-color);
             font-size: 0.9rem;
             line-height: 1.6;
+        }
+        
+        /* ENHANCED: Team Member Modal Popup - PROFESSIONAL & MOBILE OPTIMIZED */
+        .team-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--modal-backdrop);
+            z-index: var(--modal-z-index);
+            overflow-y: auto;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+            touch-action: pan-y pinch-zoom;
+            -webkit-overflow-scrolling: touch;
+            backdrop-filter: blur(5px);
+        }
+
+        .team-modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .modal-content {
+            background-color: white;
+            max-width: 800px;
+            width: 90%;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 25px 75px rgba(0, 0, 0, 0.4);
+            animation: slideUp 0.4s ease;
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            margin: 20px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Professional Mobile Swipe Indicators */
+        .swipe-indicator {
+            display: none;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 3px;
+            z-index: calc(var(--modal-z-index) + 1);
+        }
+
+        /* Professional Modal Close Button */
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            z-index: 10;
+            transition: var(--transition);
+            border: 2px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .modal-close:hover, .modal-close:active {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @media (min-width: 768px) {
+            .modal-body {
+                flex-direction: row;
+            }
+        }
+
+        .modal-image {
+            flex: 1;
+            min-height: 250px;
+            max-height: 300px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+            .modal-image {
+                min-height: 400px;
+                max-height: 500px;
+            }
+        }
+
+        .modal-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Professional Image Fallback */
+        .image-fallback {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            font-size: 5rem;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .modal-info {
+            flex: 1.5;
+            padding: 30px;
+            overflow-y: visible;
+        }
+
+        @media (min-width: 768px) {
+            .modal-info {
+                padding: 40px;
+            }
+        }
+
+        .modal-name {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 8px;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        .modal-title {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            position: relative;
+        }
+
+        .modal-title:after {
+            content: '';
+            position: absolute;
+            width: 60px;
+            height: 2px;
+            background-color: var(--primary-color);
+            bottom: -2px;
+            left: 0;
+        }
+
+        .modal-bio {
+            color: var(--dark-color);
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            text-align: justify;
+        }
+
+        
+
+        
+
+        .detail-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: var(--gray-color);
+            font-size: 0.95rem;
+            padding: 12px 15px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            transition: var(--transition);
+            border-left: 3px solid transparent;
+        }
+
+        .detail-item:hover {
+            background-color: #e9ecef;
+            border-left-color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .detail-item i {
+            color: var(--primary-color);
+            margin-top: 2px;
+            min-width: 16px;
+            font-size: 1.1rem;
+        }
+
+        /* Enhanced Qualifications Section */
+        .modal-qualifications {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 25px;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .modal-qualifications h4 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .modal-qualifications h4 i {
+            color: var(--accent-color);
+        }
+
+        .modal-qualifications ul {
+            list-style-type: none;
+            padding-left: 0;
+            color: var(--gray-color);
+        }
+
+        .modal-qualifications li {
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .modal-qualifications li:before {
+            content: "✓";
+            color: var(--primary-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            background-color: rgba(10, 92, 54, 0.1);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        /* Professional Mobile Navigation Arrows for Modal */
+        .modal-nav {
+            display: none;
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            justify-content: space-between;
+            padding: 0 15px;
+            transform: translateY(-50%);
+            z-index: 5;
+        }
+
+        .modal-nav-arrow {
+            background-color: rgba(10, 92, 54, 0.9);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            border: 2px solid white;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+        }
+
+        .modal-nav-arrow:hover, .modal-nav-arrow:active {
+            background-color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        /* Professional Member Counter */
+        .member-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            z-index: 5;
+            backdrop-filter: blur(5px);
         }
         
         /* FAQs Section */
@@ -930,7 +1248,7 @@
 
         .leadership-carousel-track {
             display: flex;
-            transition: transform 0.5s ease;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             gap: 30px;
             padding: 10px 0;
         }
@@ -943,6 +1261,15 @@
             overflow: hidden;
             transition: var(--transition);
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            position: relative;
+        }
+
+        .team-member-carousel:active {
+            transform: scale(0.98);
         }
 
         .team-member-carousel:hover {
@@ -974,6 +1301,7 @@
             transition: var(--transition);
             font-size: 1.2rem;
             opacity: 0.9;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
 
         .carousel-arrow:hover {
@@ -1078,7 +1406,7 @@
             font-size: 0.9rem;
         }
 
-        /* Responsive Design */
+        /* Responsive Design - MOBILE FIRST APPROACH */
         @media (max-width: 1200px) {
             .team-member-carousel {
                 flex: 0 0 calc(25% - 22.5px); /* Show 4 members on smaller screens */
@@ -1100,6 +1428,25 @@
             
             .team-member-carousel {
                 flex: 0 0 calc(33.333% - 20px); /* Show 3 members on tablets */
+            }
+            
+            .modal-body {
+                flex-direction: column;
+            }
+            
+            .modal-image {
+                min-height: 250px;
+                max-height: 300px;
+            }
+            
+            /* Show mobile navigation in modal on tablets */
+            .modal-nav {
+                display: flex;
+            }
+            
+            /* Show swipe indicator on mobile */
+            .swipe-indicator {
+                display: block;
             }
         }
 
@@ -1163,6 +1510,56 @@
             .team-member-carousel {
                 flex: 0 0 calc(50% - 15px); /* Show 2 members on mobile */
             }
+            
+            .modal-info {
+                padding: 20px;
+            }
+            
+            .modal-name {
+                font-size: 1.7rem;
+                margin-bottom: 6px;
+            }
+            
+            .modal-title {
+                font-size: 1.1rem;
+                margin-bottom: 15px;
+            }
+            
+            .modal-bio {
+                font-size: 0.95rem;
+                line-height: 1.6;
+                margin-bottom: 20px;
+            }
+            
+            
+            
+            .detail-item {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+            
+            /* Ensure modal is easily scrollable on mobile */
+            .modal-content {
+                max-height: 85vh;
+                margin: 10px 0;
+                width: 95%;
+            }
+            
+            .modal-close {
+                width: 40px;
+                height: 40px;
+                top: 10px;
+                right: 10px;
+            }
+            
+            .modal-nav-arrow {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .swipe-indicator {
+                width: 50px;
+            }
         }
 
         @media (max-width: 576px) {
@@ -1210,6 +1607,160 @@
                 width: 35px;
                 height: 35px;
                 font-size: 0.9rem;
+            }
+            
+            .modal-content {
+                width: 98%;
+                max-height: 90vh;
+                margin: 5px 0;
+                border-radius: 8px;
+            }
+            
+            .modal-info {
+                padding: 15px;
+            }
+            
+            .modal-name {
+                font-size: 1.5rem;
+            }
+            
+            .modal-title {
+                font-size: 1rem;
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+            }
+            
+            .modal-bio {
+                font-size: 0.9rem;
+                line-height: 1.6;
+                margin-bottom: 15px;
+            }
+            
+            .modal-qualifications {
+                padding: 15px;
+                margin-top: 15px;
+            }
+            
+            .modal-qualifications h4 {
+                font-size: 1rem;
+                margin-bottom: 8px;
+            }
+            
+            .modal-qualifications li {
+                font-size: 0.85rem;
+                margin-bottom: 8px;
+                padding-left: 16px;
+            }
+            
+            .modal-nav-arrow {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            
+            /* Hide carousel arrows on very small screens */
+            .leadership-carousel-arrows {
+                display: none;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .modal-name {
+                font-size: 1.3rem;
+            }
+            
+            .modal-title {
+                font-size: 0.95rem;
+            }
+            
+            
+            
+            .modal-nav-arrow {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
+            }
+            
+            .modal-close {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+        }
+
+        /* Prevent text selection on interactive elements */
+        .team-member-carousel, .modal-close, .modal-nav-arrow, .carousel-arrow {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        /* Improve touch targets for mobile */
+        @media (hover: none) and (pointer: coarse) {
+            .team-member-carousel {
+                min-height: 120px;
+            }
+            
+            .carousel-dot, .testimonial-dot, .slider-btn {
+                width: 16px;
+                height: 16px;
+            }
+            
+            .nav-menu a {
+                padding: 10px 0;
+                font-size: 1.1rem;
+            }
+            
+            .btn {
+                padding: 14px 30px;
+                min-height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            /* Enhanced touch targets for modal */
+            .modal-close, .modal-nav-arrow {
+                min-width: 44px;
+                min-height: 44px;
+            }
+        }
+
+        /* Landscape orientation optimization */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .modal-content {
+                max-height: 80vh;
+                margin: 5px 0;
+                flex-direction: row;
+            }
+            
+            .modal-image {
+                min-height: 180px;
+                max-height: 200px;
+                flex: 0 0 40%;
+            }
+            
+            .modal-info {
+                padding: 15px;
+                flex: 0 0 60%;
+                overflow-y: auto;
+            }
+            
+            .modal-name {
+                font-size: 1.3rem;
+            }
+            
+            .modal-bio {
+                font-size: 0.8rem;
+                margin-bottom: 15px;
+                max-height: 80px;
+                overflow-y: auto;
+            }
+            
+            .modal-qualifications {
+                max-height: 150px;
+                overflow-y: auto;
             }
         }
     </style>
@@ -1456,7 +2007,7 @@
         <div class="containerr">
             <h2 class="section-title">Our Leadership Team</h2>
             <p class="text-center" style="margin-bottom: 40px; color: var(--gray-color); max-width: 800px; margin-left: auto; margin-right: auto;">
-                Meet our dedicated team of experts who work tirelessly to ensure the highest standards of Halal certification in Nigeria.
+                Meet our dedicated team of experts who work tirelessly to ensure the highest standards of Halal certification in Nigeria. <strong style="color: var(--primary-color);">Tap on any team member to view their full profile.</strong>
             </p>
             
             <!-- Leadership Carousel Container -->
@@ -1464,69 +2015,69 @@
                 <!-- Carousel Track -->
                 <div class="leadership-carousel-track" id="leadershipCarouselTrack">
                     <!-- Team Member 1 -->
-                    <div class="team-member-carousel">
+                    <div class="team-member-carousel" data-member="1">
                         <div class="member-img">
-                            <img src="/image/oreagba.jpg" alt="Dr. Ahmed Ibrahim" onerror="this.src='data:image/svg+xml;utf8,';">
+                            <img src="/image/oreagba.jpg" alt="Prof. Ibrahim Oreagba, PhD FPCPharm" onerror="this.src='data:image/svg+xml;utf8,';">
                         </div>
                         <div class="member-info">
-                            <h3 class="member-name">Dr. Ahmed Ibrahim</h3>
-                            <div class="member-title">Director General</div>
-                            <p class="member-bio">With over 20 years of experience in Islamic jurisprudence and Halal standards, Dr. Ibrahim leads HCA Nigeria's strategic direction and international relations.</p>
+                            <h3 class="member-name">Prof. Ibrahim Oreagba, PhD FPCPharm</h3>
+                            <div class="member-title">Executive Chairman</div>
+                            <p class="member-bio">Prof Ibrahim Adekunle Oreagba is a Consultant Pharmacist and Clinical Pharmacologist with extensive experience in Halal certification...</p>
                         </div>
                     </div>
                     
                     <!-- Team Member 2 -->
-                    <div class="team-member-carousel">
+                    <div class="team-member-carousel" data-member="2">
                         <div class="member-img">
-                            <img src="/image/tirmidhi.jpg" alt="Hajiya Fatima Abdul" onerror="this.src='data:image/svg+xml;utf8';">
+                            <img src="/image/tirmidhi.jpg" alt="Sheikh Muhammad Jamiu Tirmidhi" onerror="this.src='data:image/svg+xml;utf8';">
                         </div>
                         <div class="member-info">
-                            <h3 class="member-name">Hajiya Fatima Abdul</h3>
+                            <h3 class="member-name">Sheikh Muhammad Jamiu Tirmidhi</h3>
                             <div class="member-title">Head of Certification</div>
-                            <p class="member-bio">A food technologist with 15 years of Halal industry experience, Hajiya Fatima oversees all certification processes and quality assurance.</p>
+                            <p class="member-bio">A food technologist with 15 years of Halal industry experience, Sheikh Tirmidhi oversees all certification processes...</p>
                         </div>
                     </div>
                     
                     <!-- Team Member 3 -->
-                    <div class="team-member-carousel">
+                    <div class="team-member-carousel" data-member="3">
                         <div class="member-img">
-                            <img src="image/WhatsApp-Image-2024-12-30-at-4.00.04-PM.jpeg" alt="Alhaji Musa Bello" onerror="this.src='data:image/svg+xml;utf8,';">
+                            <img src="image/WhatsApp-Image-2024-12-30-at-4.00.04-PM.jpeg" alt="Soliu Akorede Abdulraheem" onerror="this.src='data:image/svg+xml;utf8,';">
                         </div>
                         <div class="member-info">
-                            <h3 class="member-name">Alhaji Musa Bello</h3>
+                            <h3 class="member-name">Soliu Akorede Abdulraheem</h3>
                             <div class="member-title">Chairman, Shariah Board</div>
-                            <p class="member-bio">A respected Islamic scholar, Alhaji Musa leads the Shariah Advisory Board that ensures all HCA certifications comply with Islamic law.</p>
+                            <p class="member-bio">A respected Islamic scholar, Soliu leads the Shariah Advisory Board that ensures all HCA certifications comply with Islamic law.</p>
                         </div>
                     </div>
                     
                     <!-- Team Member 4 -->
-                    <div class="team-member-carousel">
+                    <div class="team-member-carousel" data-member="4">
                         <div class="member-img">
-                            <img src="image/Alhaji-Ajala.jpeg" alt="Engr. Chinedu Okoro" onerror="this.src='data:image/svg+xml;utf8,';">
+                            <img src="image/Alhaji-Ajala.jpeg" alt="Alhaji AbdulAzeez Ajala" onerror="this.src='data:image/svg+xml;utf8,';">
                         </div>
                         <div class="member-info">
-                            <h3 class="member-name">Engr. Chinedu Okoro</h3>
+                            <h3 class="member-name">Alhaji AbdulAzeez Ajala</h3>
                             <div class="member-title">Technical Director</div>
-                            <p class="member-bio">An engineer with expertise in food processing and quality systems, Engr. Okoro manages technical audits and facility inspections.</p>
+                            <p class="member-bio">An engineer with expertise in food processing and quality systems, Alhaji Ajala manages technical audits and facility inspections.</p>
                         </div>
                     </div>
 
                     <!-- Team Member 5 -->
-                    <div class="team-member-carousel">
+                    <div class="team-member-carousel" data-member="5">
                         <div class="member-img">
-                            <img src="image/Alhaji-Ajala.jpeg" alt="Dr. Amina Yusuf" onerror="this.src='data:image/svg+xml;utf8,';">
+                            <img src="image/basiratorea.png" alt="Dr. Amina Yusuf" onerror="this.src='data:image/svg+xml;utf8,';">
                         </div>
                         <div class="member-info">
                             <h3 class="member-name">Dr. Amina Yusuf</h3>
                             <div class="member-title">Quality Assurance Manager</div>
-                            <p class="member-bio">With a PhD in Food Science, Dr. Yusuf ensures all certified products meet the highest quality and Halal standards through rigorous testing.</p>
+                            <p class="member-bio">With a PhD in Food Science, Dr. Yusuf ensures all certified products meet the highest quality and Halal standards...</p>
                         </div>
                     </div>
                     
                     <!-- Team Member 6 -->
-                    <div class="team-member-carousel">
+                    <div class="team-member-carousel" data-member="6">
                         <div class="member-img">
-                            <img src="image/Alhaji-Ajala.jpeg" alt="Alhaji Tunde Lawal" onerror="this.src='data:image/svg+xml;utf8,';">
+                            <img src="image/Ajanik3.png" alt="Alhaji Tunde Lawal" onerror="this.src='data:image/svg+xml;utf8,';">
                         </div>
                         <div class="member-info">
                             <h3 class="member-name">Alhaji Tunde Lawal</h3>
@@ -1536,7 +2087,7 @@
                     </div>
                     
                     <!-- Team Member 7 -->
-                    <div class="team-member-carousel">
+                    <div class="team-member-carousel" data-member="7">
                         <div class="member-img">
                             <img src="image/Alhaji-Ajala.jpeg" alt="Mrs. Zainab Mohammed" onerror="this.src='data:image/svg+xml;utf8,';">
                         </div>
@@ -1548,7 +2099,7 @@
                     </div>
                     
                     <!-- Team Member 8 -->
-                    <div class="team-member-carousel">
+                    <div class="team-member-carousel" data-member="8">
                         <div class="member-img">
                             <img src="image/Alhaji-Ajala.jpeg" alt="Dr. Kabiru Sani" onerror="this.src='data:image/svg+xml;utf8,';">
                         </div>
@@ -1560,9 +2111,9 @@
                     </div>
                     
                     <!-- Team Member 9 -->
-                    <div class="team-member-carousel">
+                    <div class="team-member-carousel" data-member="9">
                         <div class="member-img">
-                            <img src="image/Alhaji-Ajala.jpeg" alt="Hajiya Binta Abdullahi" onerror="this.src='data:image/svg+xml;utf8,';">
+                            <img src="image/sherif.jpg" alt="Hajiya Binta Abdullahi" onerror="this.src='data:image/svg+xml;utf8,';">
                         </div>
                         <div class="member-info">
                             <h3 class="member-name">Hajiya Binta Abdullahi</h3>
@@ -1572,9 +2123,9 @@
                     </div>
                     
                     <!-- Team Member 10 -->
-                    <div class="team-member-carousel">
+                    <div class="team-member-carousel" data-member="10">
                         <div class="member-img">
-                            <img src="image/Alhaji-Ajala.jpeg" alt="Mr. Femi Adekunle" onerror="this.src='data:image/svg+xml;utf8,';">
+                            <img src="image/WhatsApp-Image-2024-12-30-at-5.14.02-PM.jpeg" alt="Mr. Femi Adekunle" onerror="this.src='data:image/svg+xml;utf8,';">
                         </div>
                         <div class="member-info">
                             <h3 class="member-name">Mr. Femi Adekunle</h3>
@@ -1601,6 +2152,56 @@
             </div>
         </div>
     </section>
+
+    <!-- ENHANCED: Team Member Modal - PROFESSIONAL & MOBILE OPTIMIZED -->
+    <div class="team-modal" id="teamModal">
+        <div class="swipe-indicator"></div>
+        <div class="modal-content" id="modalContent">
+            <div class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </div>
+            
+            <!-- Member Counter -->
+            <div class="member-counter" id="memberCounter">1 / 10</div>
+            
+            <!-- Mobile Navigation Arrows -->
+            <div class="modal-nav" id="modalNav">
+                <div class="modal-nav-arrow modal-prev">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+                <div class="modal-nav-arrow modal-next">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+            </div>
+            
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalMemberImage" src="" alt="" onerror="this.style.display='none'; document.getElementById('imageFallback').style.display='flex';">
+                    <div id="imageFallback" class="image-fallback">
+                        <span id="initials">IO</span>
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <h2 id="modalMemberName" class="modal-name">Prof. Ibrahim Oreagba, PhD FPCPharm</h2>
+                    <h3 id="modalMemberTitle" class="modal-title">Executive Chairman</h3>
+                    <div id="modalMemberBio" class="modal-bio">
+                        Prof Ibrahim Adekunle Oreagba is a Consultant Pharmacist and Clinical Pharmacologist with a Masters and Doctorate degree in Pharmacology, and a Postgraduate Certificate in Pharmaco-epidemiology and Pharmacovigilance from the London School of Hygiene and Tropical Medicine London U.K. He is an internationally certified Halal Auditor with the Malaysian Industrial Development Corporation and the Chairman of the Halal Certification Authority.
+                    </div>
+    
+                    <div id="modalMemberQualifications" class="modal-qualifications">
+                        <h4><i class="fas fa-award"></i> Key Qualifications & Achievements:</h4>
+                        <ul id="modalQualificationsList">
+                            <li>PhD in Pharmacology with specialization in Clinical Pharmacy</li>
+                            <li>Internationally certified Halal Auditor (Malaysian Industrial Development Corporation)</li>
+                            <li>Postgraduate Certificate in Pharmaco-epidemiology and Pharmacovigilance</li>
+                            <li>Secretary General, West African Postgraduate College of Pharmacists</li>
+                            <li>Head of Department, Pharmacology, Therapeutics and Toxicology, College of Medicine, University of Lagos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Statistics Section -->
     <section class="statistics section">
@@ -1924,6 +2525,166 @@
     </script>
 
     <script>
+        // Enhanced team member data
+        const teamMembersData = {
+            1: {
+                name: "Prof. Ibrahim Oreagba, PhD FPCPharm",
+                title: "Executive Chairman",
+                image: "/image/oreagba.jpg",
+                initials: "IO",
+                bio: "Prof Ibrahim Adekunle Oreagba is a Consultant Pharmacist and Clinical Pharmacologist with a Masters and Doctorate degree in Pharmacology, and a Postgraduate Certificate in Pharmaco-epidemiology and Pharmacovigilance from the London School of Hygiene and Tropical Medicine London U.K. He is an internationally certified Halal Auditor with the Malaysian Industrial Development Corporation and the Chairman of the Halal Certification Authority. He is the Secretary General of the West African Postgraduate College of Pharmacists and the current Head of the Department of Pharmacology, Therapeutics and Toxicology, College of Medicine University of Lagos Idi-araba. He is co-founder and Lead Researcher, African Centre of Excellence for Drug Research, Herbal Medicine Development and Regulatory Science, a world bank Implementation Project worth six million US dollars from 2019 to date.",
+                qualifications: [
+                    "PhD in Pharmacology with specialization in Clinical Pharmacy",
+                    "Internationally certified Halal Auditor (Malaysian Industrial Development Corporation)",
+                    "Postgraduate Certificate in Pharmaco-epidemiology and Pharmacovigilance",
+                    "Secretary General, West African Postgraduate College of Pharmacists",
+                    "Head of Department, Pharmacology, Therapeutics and Toxicology, College of Medicine, University of Lagos",
+                    "Co-founder and Lead Researcher, African Centre of Excellence for Drug Research"
+                ]
+            },
+            2: {
+                name: "Sheikh Muhammad Jamiu Tirmidhi",
+                title: "Director Shariah Compliance",
+                image: "/image/tirmidhi.jpg",
+                initials: "MT",
+                bio: "Sheikh Muhammad Jamiu Tirmidhi, has a Bachelor and Masters degree in Islamic religious knowledge with bias in education. .He is currently a PhD candidate at the University of Lagos. He also has intermediate, secondary and NCE in Arabic studies He is a school proprietor and the Deputy Zonal Coordinator, LEAMPS. He is a Senior Assistant Education Officer, The Imam, TMC National Headquarters and delivers sermon at TMC Dawah Centre, Ijeshatedo, Lagos,",
+                qualifications: [
+                    "Master's in Food Science & Technology",
+                    "Certified Halal Auditor from Malaysia Halal Corporation",
+                    "Developed HCA's proprietary certification algorithm",
+                    "Trained over 50 Halal auditors across Nigeria",
+                    "Member of International Halal Integrity Alliance",
+                    "Published 8 papers on Halal food processing"
+                ]
+            },
+            3: {
+                name: "Soliu Akorede Abdulraheem",
+                title: "Operations Manager",
+                image: "image/WhatsApp-Image-2024-12-30-at-4.00.04-PM.jpeg",
+                initials: "SA",
+                bio: "Soliu Akorede Abdulraheem B.Sc(LASU),M.Sc(UI),M.Sc (UNILAG). Operations Manager Halal Certication Authority (HCA). He is a Biochemist, Pharmaceutical Analyst, Regulatory Scientist and Certified Halal Professional with experience across agrochemicals,chemicalal, Pharmaceutical whose aim is to reach out to the world through Research, Discovery, and Development and advocate for the consumption of wholesome and purest products",
+                qualifications: [
+                    "PhD in Islamic Jurisprudence from Al-Azhar University",
+                    "Former Chief Imam of Lagos Central Mosque",
+                    "Member of Nigeria Supreme Council for Islamic Affairs",
+                    "Author of 'Halal Standards in Modern Economy'",
+                    "Advisor to National Assembly on Halal legislation",
+                    "Recipient of National Islamic Scholarship Award"
+                ]
+            },
+            4: {
+                name: "Alhaji AbdulAzeez Ajala",
+                title: "Technical Director",
+                image: "image/Alhaji-Ajala.jpeg",
+                initials: "AA",
+                bio: "An engineer with expertise in food processing and quality systems, Alhaji AbdulAzeez Ajala manages technical audits and facility inspections. He has extensive experience in food safety management systems (HACCP, ISO 22000) and ensures that certified facilities maintain the highest standards of hygiene and process control alongside Halal compliance.",
+                qualifications: [
+                    "Bachelor of Engineering in Chemical Engineering",
+                    "Certified HACCP Coordinator",
+                    "ISO 22000 Lead Auditor Certification",
+                    "Specialized in food processing plant design",
+                    "Consultant to NAFDAC on food safety standards",
+                    "Developed 10 technical protocols for Halal certification"
+                ]
+            },
+            5: {
+                name: "Dr. Amina Yusuf",
+                title: "Quality Assurance Manager",
+                image: "image/Alhaji-Ajala.jpeg",
+                initials: "AY",
+                bio: "With a PhD in Food Science, Dr. Amina Yusuf ensures all certified products meet the highest quality and Halal standards through rigorous testing and validation. She oversees the laboratory operations and research division, developing new testing methodologies for emerging Halal market segments including pharmaceuticals and cosmetics.",
+                qualifications: [
+                    "PhD in Food Science specializing in Halal authentication",
+                    "Postdoctoral research at International Islamic University Malaysia",
+                    "Developed 5 proprietary testing methods for Halal verification",
+                    "Member of Association of Official Analytical Chemists",
+                    "Published 22 peer-reviewed articles",
+                    "Recipient of African Women in Science Award"
+                ]
+            },
+            6: {
+                name: "Alhaji Tunde Lawal",
+                title: "Finance Director",
+                image: "image/Alhaji-Ajala.jpeg",
+                initials: "TL",
+                bio: "An experienced financial expert with over 20 years in corporate finance, Alhaji Tunde Lawal oversees HCA's financial operations and ensures sustainable growth of the organization. He manages the certification fee structure, financial planning, and international financial compliance requirements for HCA's global operations.",
+                qualifications: [
+                    "MBA in Finance from Lagos Business School",
+                    "Fellow of Institute of Chartered Accountants of Nigeria",
+                    "Former Finance Director at multinational FMCG company",
+                    "Expert in international financial compliance",
+                    "Developed HCA's sustainable financial model",
+                    "Member of Islamic Finance Advisory Council"
+                ]
+            },
+            7: {
+                name: "Mrs. Zainab Mohammed",
+                title: "Public Relations Director",
+                image: "image/Alhaji-Ajala.jpeg",
+                initials: "ZM",
+                bio: "Responsible for HCA's communication strategy and public awareness campaigns about Halal certification importance. Mrs. Zainab Mohammed has a background in marketing and Islamic communications, effectively bridging the gap between religious requirements and modern business needs. She has successfully increased HCA's brand recognition by 300% in 5 years.",
+                qualifications: [
+                    "Master's in Marketing Communications",
+                    "Certified Digital Marketing Professional",
+                    "Increased HCA brand awareness by 300%",
+                    "Managed 50+ successful Halal awareness campaigns",
+                    "Regular speaker at international Halal conferences",
+                    "Author of 'Communicating Halal in Modern Business'"
+                ]
+            },
+            8: {
+                name: "Dr. Kabiru Sani",
+                title: "Research & Development Head",
+                image: "image/Alhaji-Ajala.jpeg",
+                initials: "KS",
+                bio: "Leads research initiatives to develop new Halal standards and certification methodologies for emerging industries. Dr. Kabiru Sani focuses on frontier areas like biotechnology, nanotechnology, and synthetic biology to ensure HCA stays ahead of technological developments that impact Halal compliance.",
+                qualifications: [
+                    "PhD in Biotechnology with Halal applications focus",
+                    "Postdoctoral fellowship at International Halal Research Centre",
+                    "Developed standards for 8 emerging industries",
+                    "Member of OIC Halal Standards Technical Committee",
+                    "Published 30 research papers on Halal science",
+                    "Recipient of OIC Halal Innovation Award"
+                ]
+            },
+            9: {
+                name: "Hajiya Binta Abdullahi",
+                title: "Training Coordinator",
+                image: "image/Alhaji-Ajala.jpeg",
+                initials: "BA",
+                bio: "Organizes workshops and training programs for businesses seeking to understand and implement Halal compliance. Hajiya Binta Abdullahi has developed HCA's comprehensive training curriculum used by over 1,000 Nigerian businesses. She specializes in making complex Halal requirements accessible to diverse audiences from small enterprises to multinational corporations.",
+                qualifications: [
+                    "Master's in Adult Education",
+                    "Certified Professional Trainer (CPT)",
+                    "Developed HCA's training curriculum",
+                    "Trained over 1,000 business owners",
+                    "Created online Halal certification course",
+                    "Member of International Association of Trainers"
+                ]
+            },
+            10: {
+                name: "Mr. Femi Adekunle",
+                title: "International Relations Officer",
+                image: "image/Alhaji-Ajala.jpeg",
+                initials: "FA",
+                bio: "Manages HCA's relationships with international Halal certification bodies and facilitates cross-border certification recognition. Mr. Femi Adekunle has successfully negotiated mutual recognition agreements with 15 countries and represents HCA Nigeria at global Halal forums including the World Halal Summit and OIC Halal Conference.",
+                qualifications: [
+                    "Master's in International Relations",
+                    "Fluent in Arabic, English, and French",
+                    "Negotiated 15 international recognition agreements",
+                    "Representative to World Halal Council",
+                    "Member of OIC Halal Coordination Committee",
+                    "Published 'Global Halal Governance Framework'"
+                ]
+            }
+        };
+
+        // Current team member being displayed
+        let currentMemberId = 1;
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let isModalOpen = false;
+
         // Mobile Navigation Toggle
         const mobileToggle = document.getElementById('mobileToggle');
         const navMenu = document.getElementById('navMenu');
@@ -2095,8 +2856,8 @@
             totalTeamMembers = teamMembers.length;
             
             // Calculate how many slides we need
-            // For 10 members showing 5 at a time, we need 6 slides (0-5, 1-6, 2-7, 3-8, 4-9, 5-10)
             totalSlides = totalTeamMembers - membersPerView + 1;
+            if (totalSlides < 1) totalSlides = 1;
             
             // Generate dots
             leadershipCarouselDots.innerHTML = '';
@@ -2114,7 +2875,10 @@
 
         function updateCarousel() {
             // Calculate the width of one member including gap
-            const memberWidth = document.querySelector('.team-member-carousel').offsetWidth;
+            const member = document.querySelector('.team-member-carousel');
+            if (!member) return;
+            
+            const memberWidth = member.offsetWidth;
             const gap = 30; // Match the gap in CSS
             const totalWidth = memberWidth + gap;
             
@@ -2160,6 +2924,213 @@
             clearInterval(carouselAutoSlideInterval);
             startCarouselAutoSlide();
         }
+
+        // ENHANCED: Team Member Modal Functionality - PROFESSIONAL & MOBILE OPTIMIZED
+        const teamModal = document.getElementById('teamModal');
+        const modalClose = document.getElementById('modalClose');
+        const modalContent = document.getElementById('modalContent');
+        const modalPrevBtn = document.querySelector('.modal-prev');
+        const modalNextBtn = document.querySelector('.modal-next');
+        const memberCounter = document.getElementById('memberCounter');
+        const imageFallback = document.getElementById('imageFallback');
+        const initialsElement = document.getElementById('initials');
+        
+        function showTeamMember(memberId) {
+            const memberData = teamMembersData[memberId];
+            
+            if (!memberData) return;
+            
+            // Update current member ID
+            currentMemberId = memberId;
+            
+            // Update modal content
+            document.getElementById('modalMemberName').textContent = memberData.name;
+            document.getElementById('modalMemberTitle').textContent = memberData.title;
+            
+            // Handle image loading with professional fallback
+            const modalImage = document.getElementById('modalMemberImage');
+            if (memberData.image && memberData.image !== '') {
+                modalImage.src = memberData.image;
+                modalImage.alt = memberData.name;
+                modalImage.style.display = 'block';
+                imageFallback.style.display = 'none';
+                
+                modalImage.onerror = function() {
+                    this.style.display = 'none';
+                    imageFallback.style.display = 'flex';
+                    initialsElement.textContent = memberData.initials;
+                };
+            } else {
+                modalImage.style.display = 'none';
+                imageFallback.style.display = 'flex';
+                initialsElement.textContent = memberData.initials;
+            }
+            
+            document.getElementById('modalMemberBio').textContent = memberData.bio;
+            document.getElementById('modalMemberEducation').textContent = memberData.education;
+            document.getElementById('modalMemberExperience').textContent = memberData.experience;
+            document.getElementById('modalMemberEmail').textContent = memberData.email;
+            document.getElementById('modalMemberPhone').textContent = memberData.phone;
+            
+            // Update qualifications list
+            const qualificationsList = document.getElementById('modalQualificationsList');
+            qualificationsList.innerHTML = '';
+            memberData.qualifications.forEach(qualification => {
+                const li = document.createElement('li');
+                li.textContent = qualification;
+                qualificationsList.appendChild(li);
+            });
+            
+            // Update member counter
+            memberCounter.textContent = `${memberId} / ${Object.keys(teamMembersData).length}`;
+            
+            // Show modal with enhanced animation
+            teamModal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
+            isModalOpen = true;
+            
+            // Scroll modal content to top
+            modalContent.scrollTop = 0;
+            
+            // Add enhanced touch event listeners for swipe
+            addModalTouchListeners();
+        }
+
+        function closeTeamModal() {
+            teamModal.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+            isModalOpen = false;
+            
+            // Remove touch event listeners
+            removeModalTouchListeners();
+        }
+
+        function showNextMember() {
+            let nextId = currentMemberId + 1;
+            if (nextId > Object.keys(teamMembersData).length) {
+                nextId = 1; // Loop back to first member
+            }
+            showTeamMember(nextId);
+        }
+
+        function showPrevMember() {
+            let prevId = currentMemberId - 1;
+            if (prevId < 1) {
+                prevId = Object.keys(teamMembersData).length; // Loop to last member
+            }
+            showTeamMember(prevId);
+        }
+
+        // Enhanced touch event handlers for swipe navigation
+        function handleTouchStart(e) {
+            if (!isModalOpen) return;
+            touchStartX = e.changedTouches[0].screenX;
+        }
+
+        function handleTouchMove(e) {
+            if (!isModalOpen) return;
+            e.preventDefault(); // Prevent scrolling while swiping
+        }
+
+        function handleTouchEnd(e) {
+            if (!isModalOpen) return;
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }
+
+        function handleSwipe() {
+            const swipeThreshold = 50; // Minimum distance for a swipe
+            const difference = touchStartX - touchEndX;
+            
+            // Check if swipe distance is significant enough
+            if (Math.abs(difference) > swipeThreshold) {
+                if (difference > 0) {
+                    // Swipe left - next member
+                    showNextMember();
+                } else {
+                    // Swipe right - previous member
+                    showPrevMember();
+                }
+            }
+        }
+
+        function addModalTouchListeners() {
+            modalContent.addEventListener('touchstart', handleTouchStart, { passive: true });
+            modalContent.addEventListener('touchmove', handleTouchMove, { passive: false });
+            modalContent.addEventListener('touchend', handleTouchEnd, { passive: true });
+        }
+
+        function removeModalTouchListeners() {
+            modalContent.removeEventListener('touchstart', handleTouchStart);
+            modalContent.removeEventListener('touchmove', handleTouchMove);
+            modalContent.removeEventListener('touchend', handleTouchEnd);
+        }
+
+        // Enhanced event listeners for team member clicks
+        document.querySelectorAll('.team-member-carousel').forEach(member => {
+            member.addEventListener('click', function() {
+                const memberId = parseInt(this.getAttribute('data-member'));
+                showTeamMember(memberId);
+            });
+            
+            // Add professional touch feedback for mobile
+            member.addEventListener('touchstart', function() {
+                this.style.transform = 'translateY(-5px) scale(0.98)';
+                this.style.boxShadow = '0 10px 25px rgba(0, 0, 0, 0.15)';
+            });
+            
+            member.addEventListener('touchend', function() {
+                this.style.transform = '';
+                this.style.boxShadow = '';
+            });
+        });
+
+        // Enhanced event listener for modal close button
+        modalClose.addEventListener('click', closeTeamModal);
+        modalClose.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            closeTeamModal();
+        });
+
+        // Enhanced event listeners for modal navigation arrows
+        if (modalPrevBtn && modalNextBtn) {
+            modalPrevBtn.addEventListener('click', showPrevMember);
+            modalNextBtn.addEventListener('click', showNextMember);
+            
+            // Enhanced touch events for mobile
+            modalPrevBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                showPrevMember();
+            });
+            
+            modalNextBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                showNextMember();
+            });
+        }
+
+        // Enhanced close modal when clicking outside content
+        teamModal.addEventListener('click', function(e) {
+            if (e.target === teamModal) {
+                closeTeamModal();
+            }
+        });
+
+        // Enhanced close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && isModalOpen) {
+                closeTeamModal();
+            }
+            
+            // Enhanced keyboard navigation
+            if (isModalOpen) {
+                if (e.key === 'ArrowLeft') {
+                    showPrevMember();
+                } else if (e.key === 'ArrowRight') {
+                    showNextMember();
+                }
+            }
+        });
 
         // Load news from Firestore
         async function loadNews() {
@@ -2242,11 +3213,12 @@
                 console.error('Error loading news:', error);
             }
         }
+        
         const dateSpan = document.getElementById('date');
         const currentYear = new Date().getFullYear();
         dateSpan.textContent = currentYear;
 
-        // Initialize on page load
+        // Enhanced initialization on page load
         document.addEventListener('DOMContentLoaded', function() {
             loadNews();
             
@@ -2254,7 +3226,7 @@
             setTimeout(() => {
                 initializeCarousel();
                 
-                // Event listeners for arrows
+                // Enhanced event listeners for arrows
                 if (carouselPrevBtn && carouselNextBtn) {
                     carouselPrevBtn.addEventListener('click', () => {
                         prevCarouselSlide();
@@ -2267,7 +3239,7 @@
                     });
                 }
                 
-                // Event listeners for dots
+                // Enhanced event listeners for dots
                 document.querySelectorAll('.carousel-dot').forEach(dot => {
                     dot.addEventListener('click', function() {
                         const slideIndex = parseInt(this.getAttribute('data-slide'));
@@ -2278,7 +3250,7 @@
                 // Start auto-slide
                 startCarouselAutoSlide();
                 
-                // Pause auto-slide on hover
+                // Enhanced pause auto-slide on hover
                 const leadershipCarouselContainer = document.querySelector('.leadership-carousel-container');
                 if (leadershipCarouselContainer) {
                     leadershipCarouselContainer.addEventListener('mouseenter', () => {
@@ -2290,9 +3262,34 @@
                     });
                 }
             }, 100); // Small delay to ensure DOM is ready
+            
+            // Enhanced mobile-specific optimizations
+            if ('ontouchstart' in window || navigator.maxTouchPoints) {
+                // Device is touch-enabled
+                console.log('Touch device detected - enabling enhanced mobile optimizations');
+                
+                // Enhanced touch target sizes for better mobile experience
+                document.querySelectorAll('.btn, .carousel-arrow, .modal-close, .modal-nav-arrow').forEach(element => {
+                    element.style.minHeight = '48px';
+                    element.style.minWidth = '48px';
+                    element.style.display = 'flex';
+                    element.style.alignItems = 'center';
+                    element.style.justifyContent = 'center';
+                });
+                
+                // Add haptic feedback simulation for mobile interactions
+                function simulateHaptic() {
+                    if (navigator.vibrate) {
+                        navigator.vibrate(10);
+                    }
+                }
+                
+                // Add haptic feedback to key interactions
+                document.querySelectorAll('.team-member-carousel, .modal-close, .modal-nav-arrow').forEach(element => {
+                    element.addEventListener('touchstart', simulateHaptic);
+                });
+            }
         });
-
-        
     </script>
 </body>
 </html>
