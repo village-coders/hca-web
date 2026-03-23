@@ -1131,7 +1131,7 @@ x        }
             const emptyState = document.getElementById('emptyState');
 
             try {
-                const response = await fetch('https://hca-backend.vercel.app/api/news/public');
+                const response = await fetch('https://hca-backend-six.vercel.app/api/news/public');
                 const result = await response.json();
 
                 if (result.success && result.data && result.data.length > 0) {
