@@ -1356,8 +1356,7 @@
                         <input type="text" id="searchInput" placeholder="Search news...">
                     </div>
                     <div class="header-notifications">
-                        <i class="fas fa-bell"></i>
-                        <span class="notification-badge">3</span>
+                        
                     </div>
                     <div class="header-user">
                         <div class="user-avatar" id="userAvatar">A</div>
@@ -1372,7 +1371,8 @@
             <!-- Dashboard Content -->
             <div class="dashboard-content">
                 <!-- Stats Grid -->
-                <div class="stats-grid">
+                <!-- id added for page switching -->
+                <div class="stats-grid" id="statsGrid">
                     <div class="stat-card">
                         <div class="stat-icon primary">
                             <i class="fas fa-newspaper"></i>
@@ -1412,9 +1412,10 @@
                 </div>
 
                 <!-- Content Grid -->
-                <div class="content-grid">
+                <!-- id added for page switching -->
+                <div class="content-grid" id="contentGrid">
                     <!-- News List -->
-                    <div class="admin-card">
+                    <div class="admin-card" id="newsCard">
                         <div class="card-header">
                             <h3><i class="fas fa-list"></i> All News Articles</h3>
                             <button class="btn" id="addNewsBtn">
@@ -1457,7 +1458,7 @@
                     </div>
 
                     <!-- Recent Activity -->
-                    <div class="admin-card">
+                    <div class="admin-card" id="activityCard">
                         <div class="card-header">
                             <h3><i class="fas fa-history"></i> Recent Activity</h3>
                         </div>
@@ -2249,15 +2250,44 @@
             }
         });
 
-        // Navigation
+        // Navigation — page switching
         const navLinks = document.querySelectorAll('.nav-link');
-        
+        const statsGrid   = document.getElementById('statsGrid');
+        const contentGrid = document.getElementById('contentGrid');
+        const newsCard    = document.getElementById('newsCard');
+        const activityCard= document.getElementById('activityCard');
+        const headerTitle = document.querySelector('.header-left h2');
+        const headerSubtitle = document.querySelector('.header-left p');
+
+        function showDashboard() {
+            statsGrid.style.display = '';
+            contentGrid.style.gridTemplateColumns = '';
+            activityCard.style.display = '';
+            headerTitle.textContent = 'News Management';
+            headerSubtitle.textContent = 'Manage your news articles and updates';
+        }
+
+        function showNewsOnly() {
+            statsGrid.style.display = 'none';
+            contentGrid.style.gridTemplateColumns = '1fr';
+            activityCard.style.display = 'none';
+            headerTitle.textContent = 'News Articles';
+            headerSubtitle.textContent = 'Browse and manage all news articles';
+        }
+
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
                 navLinks.forEach(l => l.classList.remove('active'));
                 link.classList.add('active');
-                
+
+                const page = link.getAttribute('data-page');
+                if (page === 'news') {
+                    showNewsOnly();
+                } else {
+                    showDashboard();
+                }
+
                 if (window.innerWidth <= 992) {
                     sidebar.classList.remove('active');
                 }
