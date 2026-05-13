@@ -6,7 +6,7 @@
     <title>Admin Dashboard | Halal Certification Authority Nigeria</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap">
-    <link rel="shortcut icon" href="/image/image1-1.png" type="image/x-icon">
+    <link rel="shortcut icon" href="image/image1-1.png" type="image/x-icon">
 
     <style>
         /* [All your existing CSS remains exactly the same] */
@@ -1257,7 +1257,7 @@
         <div class="login-container">
             <div class="login-header">
                 <div class="login-logo">
-                    <img src="/image/hcaLogo.png" alt="HCA Logo">
+                    <img src="image/hcaLogo.png" alt="HCA Logo">
                 </div>
                 <h2>Admin Login</h2>
                 <p>Enter your credentials to access the admin dashboard</p>
@@ -1307,7 +1307,7 @@
         <aside class="admin-sidebar" id="sidebar">
             <div class="sidebar-header">
                 <div class="logo">
-                    <img src="/image/hcaLogo.png" alt="HCA Logo">
+                    <img src="image/hcaLogo.png" alt="HCA Logo">
                     <span class="logo-text">HCA Admin</span>
                 </div>
                 <p>News Management System</p>
@@ -1508,7 +1508,7 @@
                         <label for="newsImage">Article Image</label>
                         <div class="image-upload-container">
                             <div class="image-preview" id="imagePreview">
-                                <img src="/image/hcaLogo.png" alt="Preview" id="previewImg">
+                                <img src="image/hcaLogo.png" alt="Preview" id="previewImg">
                                 <div class="no-image" id="noImage">
                                     <i class="fas fa-image"></i>
                                     <span>No image selected</span>
@@ -1881,7 +1881,7 @@
             newsForm.reset();
             document.getElementById('newsId').value = '';
             document.getElementById('newsDate').value = new Date().toISOString().split('T')[0];
-            document.getElementById('newsImage').value = '/image/hcaLogo.png';
+            document.getElementById('newsImage').value = 'image/hcaLogo.png';
             newsModal.classList.add('active');
         }
 
@@ -1906,7 +1906,7 @@
                     document.getElementById('newsTitle').value = news.title;
                     document.getElementById('newsDate').value = news.date.split('T')[0] || news.date;
                     document.getElementById('newsStatus').value = news.status;
-                    document.getElementById('newsImage').value = news.image || '/image/hcaLogo.png';
+                    document.getElementById('newsImage').value = news.image || 'image/hcaLogo.png';
                     document.getElementById('newsExcerpt').value = news.excerpt;
                     document.getElementById('newsContent').value = news.content;
                     document.getElementById('newsFeatured').checked = news.isFeatured || false;
@@ -1951,7 +1951,7 @@
                             </div>
                             <div class="modal-body">
                                 <div style="margin-bottom: 20px;">
-                                    <img src="${news.image || '/image/hcaLogo.png'}" alt="${news.title}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px;">
+                                    <img src="${news.image || 'image/hcaLogo.png'}" alt="${news.title}" style="width: 100%; max-height: 300px; object-fit: cover; border-radius: 8px;">
                                 </div>
                                 <div style="display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap;">
                                     <span style="color: var(--gray-color);"><i class="fas fa-calendar"></i> ${formatDate(news.date)}</span>
@@ -2048,7 +2048,7 @@
             const title = document.getElementById('newsTitle').value;
             const date = document.getElementById('newsDate').value;
             const status = document.getElementById('newsStatus').value;
-            const image = document.getElementById('newsImage').value || '/image/hcaLogo.png';
+            const image = document.getElementById('newsImage').value || 'image/hcaLogo.png';
             const excerpt = document.getElementById('newsExcerpt').value;
             const content = document.getElementById('newsContent').value;
             const isFeatured = document.getElementById('newsFeatured').checked;
@@ -2370,7 +2370,7 @@
             const previewImg = document.getElementById('previewImg');
             const noImage = document.getElementById('noImage');
             
-            previewImg.src = '/image/hcaLogo.png';
+            previewImg.src = 'image/hcaLogo.png';
             imagePreview.classList.remove('has-image');
             noImage.style.display = 'flex';
             
