@@ -6,7 +6,7 @@
     <title>News & Updates | Halal Certification Authority Nigeria</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap">
-    <link rel="shortcut icon" href="image/image1-1.png" type="image/x-icon">
+    <link rel="shortcut icon" href="/image/image1-1.png" type="image/x-icon">
 
     <style>
         /* ===== CSS Variables ===== */
@@ -777,7 +777,7 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-       }
+x        }
 
         .footer-links ul li a::before {
             content: '›';
@@ -959,7 +959,7 @@
     <header>
         <div class="container header-container">
             <div class="logo-container">
-                <img src="image/hcaLogo.png" alt="HCA Logo" class="logo-img">
+                <img src="/image/hcaLogo.png" alt="HCA Logo" class="logo-img">
                 <!-- <div class="logo-text">
                     <h1>Halal Certification Authority</h1>
                     <p>Nigeria | Ensuring Halal Compliance</p>
@@ -1046,7 +1046,7 @@
             <div class="footer-content">
                 <div class="footer-about">
                     <div class="footer-logo">
-                        <img src="image/hcaLogo.png" alt="HCA Logo" class="logo-img">
+                        <img src="/image/hcaLogo.png" alt="HCA Logo" class="logo-img">
                     </div>
                     <p>The Halal Certification Authority Nigeria is the leading body for Halal certification in Nigeria, ensuring products and services comply with Islamic Shariah law.</p>
                     <div class="footer-social">
@@ -1186,7 +1186,7 @@
             featuredNews.innerHTML = `
                 <article class="featured-news-card">
                     <div class="featured-img">
-                        <img src="${article.image || 'image/hcaLogo.png'}" alt="${article.title}">
+                        <img src="${article.image || '/image/hcaLogo.png'}" alt="${article.title}">
                         <span class="featured-badge">Featured</span>
                     </div>
                     <div class="featured-content">
@@ -1229,7 +1229,7 @@
                 return `
                     <article class="news-card">
                         <div class="news-card-img">
-                            <img src="${article.image || 'image/hcaLogo.png'}" alt="${article.title}">
+                            <img src="${article.image || '/image/hcaLogo.png'}" alt="${article.title}">
                             <span class="news-category-badge ${category}">${categoryLabel}</span>
                         </div>
                         <div class="news-card-body">
