@@ -1475,7 +1475,7 @@
             </header>
 
             <!-- Dashboard Content -->
-            <div class="dashboard-content">
+            <div class="dashboard-content" id="dashboardContent">
                 <!-- Stats Grid -->
                 <!-- id added for page switching -->
                 <div class="stats-grid" id="statsGrid">
@@ -1575,30 +1575,30 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- ===== SLIDER PAGE ===== -->
-                <div class="slider-page" id="sliderPage">
-                    <div class="admin-card">
-                        <div class="card-header">
-                            <h3><i class="fas fa-images"></i> Homepage Slides</h3>
-                            <button class="btn" id="addSlideBtn">
-                                <i class="fas fa-plus"></i> Add Slide
-                            </button>
+            <!-- ===== SLIDER PAGE ===== -->
+            <div class="slider-page" id="sliderPage" style="padding: 30px;">
+                <div class="admin-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-images"></i> Homepage Slides</h3>
+                        <button class="btn" id="addSlideBtn">
+                            <i class="fas fa-plus"></i> Add Slide
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <p style="color:var(--gray-color); font-size:0.9rem; margin-bottom:18px;">
+                            <i class="fas fa-info-circle"></i>
+                            Slides you add here appear live on the homepage slider. Delete a slide to remove it from the website.
+                        </p>
+                        <div class="slider-grid" id="sliderGrid">
+                            <!-- slides injected by JS -->
                         </div>
-                        <div class="card-body">
-                            <p style="color:var(--gray-color); font-size:0.9rem; margin-bottom:18px;">
-                                <i class="fas fa-info-circle"></i>
-                                Slides you add here appear live on the homepage slider. Delete a slide to remove it from the website.
-                            </p>
-                            <div class="slider-grid" id="sliderGrid">
-                                <!-- slides injected by JS -->
-                            </div>
-                            <div class="slide-empty-state" id="sliderEmpty" style="display:none;">
-                                <i class="fas fa-images"></i>
-                                <h3>No Slides Yet</h3>
-                                <p>Add your first slide to display on the homepage.</p>
-                                <button class="btn" onclick="openAddSlideModal()"><i class="fas fa-plus"></i> Add Slide</button>
-                            </div>
+                        <div class="slide-empty-state" id="sliderEmpty" style="display:none;">
+                            <i class="fas fa-images"></i>
+                            <h3>No Slides Yet</h3>
+                            <p>Add your first slide to display on the homepage.</p>
+                            <button class="btn" onclick="openAddSlideModal()"><i class="fas fa-plus"></i> Add Slide</button>
                         </div>
                     </div>
                 </div>
@@ -2459,7 +2459,7 @@
         }
 
         const sliderPage = document.getElementById('sliderPage');
-        const dashboardContent = document.querySelector('.dashboard-content');
+        const dashboardContent = document.getElementById('dashboardContent');
 
         function showSliderPage() {
             dashboardContent.style.display = 'none';
@@ -2681,6 +2681,11 @@
 
         // Fetch slides for admin
         async function fetchSlides() {
+            // Show inline loading in the grid
+            const grid = document.getElementById('sliderGrid');
+            const empty = document.getElementById('sliderEmpty');
+            grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gray-color)"><i class="fas fa-spinner fa-spin" style="font-size:2rem;margin-bottom:10px;display:block;"></i>Loading slides...</div>';
+            empty.style.display = 'none';
             showLoading();
             try {
                 const response = await fetch(`${API_BASE_URL}/slider`, {
@@ -2688,14 +2693,18 @@
                 });
                 const data = await response.json();
                 if (data.success) {
-                    slidesData = data.data;
+                    slidesData = data.data || [];
                     renderSliderGrid();
                 } else {
-                    showToast('Failed to fetch slides', 'error');
+                    slidesData = [];
+                    renderSliderGrid();
+                    showToast('Failed to fetch slides: ' + (data.message || 'Unknown error'), 'error');
                 }
             } catch (err) {
                 console.error('Fetch slides error:', err);
-                showToast('Error fetching slides', 'error');
+                slidesData = [];
+                renderSliderGrid();
+                showToast('Error fetching slides. Check your connection.', 'error');
             } finally {
                 hideLoading();
             }
